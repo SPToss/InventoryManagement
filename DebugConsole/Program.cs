@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+using DataAccess.Implementation;
+using System;
 
 namespace DebugConsole
 {
@@ -6,7 +8,9 @@ namespace DebugConsole
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World! + Some Test");
+
+            var t = new ProductDao().GetProductById(1);
+            Console.WriteLine("Hello World!");
         }
     }
 }
