@@ -2,9 +2,9 @@
 {
     public class ProductDto
     {
-        int Id { get; set; }
-        int OwnerId { get; set; }
-        int ProductTypeId { get; set; }
-        int ProductStatusId { get; set; }
+        public int Id { get; set; }
+        public int OwnerId { get; set; }
+        public int ProductTypeId { get; set; }
+        public int ProductStatusId { get; set; }
     }
 }

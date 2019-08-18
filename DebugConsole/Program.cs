@@ -1,5 +1,6 @@
 ﻿
 using DataAccess.Implementation;
+using Domain.Types;
 using System;
 
 namespace DebugConsole
@@ -9,7 +10,7 @@ namespace DebugConsole
         static void Main(string[] args)
         {
 
-            var t = new ProductDao().GetProductById(1);
+            var t = new ProductType(new ProductTypeDao()).GetById(4);
             Console.WriteLine("Hello World!");
         }
     }

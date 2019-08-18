@@ -11,7 +11,7 @@ namespace DataAccess.Base
 
         protected BaseConnection()
         {
-            _connection = new MySqlConnection("Server=remotemysql.com;Database=RxIuwNvphM;Uid=RxIuwNvphM;Pwd=nah;");
+            _connection = new MySqlConnection("Server=remotemysql.com;Database=RxIuwNvphM;Uid=RxIuwNvphM;Pwd=UAtxhV9gkS;");
         }
 
         protected IEnumerable<T> QuerryForList<T>(string sql)
