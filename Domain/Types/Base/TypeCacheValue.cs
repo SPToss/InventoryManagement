@@ -32,7 +32,7 @@ namespace Domain.Types.Base
         private DateTime? _lastRefreshTime;
         private int _refreshInterval;
 
-        protected TypeCacheValue(Func<IEnumerable<T>> refreshAction, int refreshInterval)
+        protected  TypeCacheValue(Func<IEnumerable<T>> refreshAction, int refreshInterval)
         {
             _refreshAction = refreshAction;
             _refreshInterval = refreshInterval;

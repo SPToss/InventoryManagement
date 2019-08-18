@@ -10,7 +10,6 @@ namespace DebugConsole
         static void Main(string[] args)
         {
 
-            var t = new ProductType(new ProductTypeDao()).GetById(4);
             Console.WriteLine("Hello World!");
         }
     }

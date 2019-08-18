@@ -1,4 +1,4 @@
-﻿using DataAccess.Interfaces.ProductStatus;
+﻿using DataAccess.Implementation;
 using DataTransfer.ProductStatus;
 using Domain.Types.Base;
 
@@ -8,7 +8,7 @@ namespace Domain.Types
     public class ProductStatus : TypeCacheValue<ProductStatusDto>
     {
         const int REFRESH_INTERVAL = 5;
-        public ProductStatus(IProductStatusDao productStatusDao) : base(productStatusDao.GetAllProductStatuses, REFRESH_INTERVAL)
+        public ProductStatus() : base(new ProductStatusDao().GetAllProductStatuses, REFRESH_INTERVAL)
         {
         }
     }

@@ -24,6 +24,6 @@ namespace DataAccess.Base
             var result = _connection.Query<T>(sql);
 
             return result.Any() ? result.FirstOrDefault() : default(T);
-        }
+        } 
     }
 }
