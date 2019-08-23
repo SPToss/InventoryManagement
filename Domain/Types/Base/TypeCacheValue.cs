@@ -48,7 +48,6 @@ namespace Domain.Types.Base
             return Cache.Where(x => x.Active == 1);
         }
 
-
         private void RefresCache()
         {
             Cache = _refreshAction();

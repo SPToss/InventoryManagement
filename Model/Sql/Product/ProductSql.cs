@@ -2,7 +2,7 @@
 namespace DataAccess.Sql.Product
 {
     public static class ProductSql
-    {
+    { 
         public static string GetProductById(int id)
         {
             return $"SELECT " +

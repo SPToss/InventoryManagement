@@ -13,13 +13,16 @@ namespace Domain
 
         public ProductTypeDto Type { get; set; }
 
+        public int OwnerId { get; set; }
+
         public static Product FromDto(ProductDto dto)
         {
             return new Product
             {
                 Id = dto.Id,
                 Status = new ProductStatus().GetById(dto.ProductStatusId),
-                Type = new ProductType().GetById(dto.ProductTypeId)
+                Type = new ProductType().GetById(dto.ProductTypeId),
+                OwnerId = dto.OwnerId
             };
         }
 
@@ -27,9 +30,10 @@ namespace Domain
         {
             return new ProductDto
             {
-                Id = this.Id,
-                ProductStatusId = this.Status.Id,
-                ProductTypeId = this.Type.Id
+                Id = Id,
+                ProductStatusId = Status.Id,
+                ProductTypeId = Type.Id,
+                OwnerId = OwnerId
             };
         }
     }
