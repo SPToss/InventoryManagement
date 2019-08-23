@@ -9,6 +9,7 @@
     <ProjectReference Include="..\DataTransfer\DataTransfer.csproj" />
     <ProjectReference Include="..\Domain\Domain.csproj" />
     <ProjectReference Include="..\Model\DataAccess.csproj" />
+    <ProjectReference Include="..\Service\Service.csproj" />
   </ItemGroup>
 
 </Project>
