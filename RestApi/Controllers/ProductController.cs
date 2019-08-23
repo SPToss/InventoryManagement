@@ -3,6 +3,7 @@ using Domain;
 using Microsoft.AspNetCore.Mvc;
 using RestApi.Models;
 using Service;
+using Service.Interface;
 
 namespace RestApi.Controllers
 {

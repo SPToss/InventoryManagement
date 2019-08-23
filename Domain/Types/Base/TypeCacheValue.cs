@@ -17,7 +17,7 @@ namespace Domain.Types.Base
                     RefresCache();
                 }
 
-                if(_lastRefreshTime.Value.AddMinutes(_refreshInterval) < DateTime.Now)
+                if(_lastRefreshTime.Value.AddMinutes(RefreshInterval()) < DateTime.Now)
                 {
                     RefresCache();
                 }
@@ -30,12 +30,10 @@ namespace Domain.Types.Base
 
         private Func<IEnumerable<T>> _refreshAction;
         private DateTime? _lastRefreshTime;
-        private int _refreshInterval;
 
-        protected  TypeCacheValue(Func<IEnumerable<T>> refreshAction, int refreshInterval)
+        protected  TypeCacheValue(Func<IEnumerable<T>> refreshAction)
         {
             _refreshAction = refreshAction;
-            _refreshInterval = refreshInterval;
         }
 
         public T GetById(int id)
@@ -53,5 +51,7 @@ namespace Domain.Types.Base
             Cache = _refreshAction();
             _lastRefreshTime = DateTime.Now;
         }
+
+        protected virtual int RefreshInterval() => 5;
     }
 }

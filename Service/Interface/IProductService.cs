@@ -1,7 +1,7 @@
 ﻿using Domain;
 
 
-namespace Service
+namespace Service.Interface
 {
     public interface IProductService
     {

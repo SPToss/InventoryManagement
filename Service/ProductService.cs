@@ -1,6 +1,7 @@
 ﻿using DataAccess.Interfaces.Product;
 using DataTransfer.Product;
 using Domain;
+using Service.Interface;
 
 namespace Service
 {
