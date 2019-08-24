@@ -24,6 +24,11 @@ namespace DataAccess.Base
             var result = _connection.Query<T>(sql);
 
             return result.Any() ? result.FirstOrDefault() : default(T);
-        } 
+        }
+
+        protected void NonResultQuerry(string sql)
+        {
+            _connection.Query(sql);
+        }
     }
 }

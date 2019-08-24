@@ -10,5 +10,13 @@ namespace DataAccess.Interfaces.Inventory
         InventoryDto GetInventoryById(int inventoryId);
 
         IEnumerable<InventoryEventDto> GetInventoryEventsByInventoryId(int invenoryId);
+
+        IEnumerable<InventoryProductDto> GetAllInventoryProductsByInventoryId(int inventoryId);
+
+        InventoryProductDto GetInventoryProductByProductId(int productId);
+
+        void AddInventoryProduct(InventoryProductDto inventoryProduct);
+
+        void AddInventoryEvent(InventoryEventDto inventoryEvent);
     }
 }

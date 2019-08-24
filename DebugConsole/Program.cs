@@ -10,7 +10,13 @@ namespace DebugConsole
     {
         static void Main(string[] args)
         {
-            var t = new ZoneService(new ZoneDao()).GetAllChildZones(3);
+            new InventoryService(new InventoryDao(), new ProductDao()).AddInventoryProduct(new Domain.InventoryProduct
+            {
+                InventoryId = 1,
+                ProductId = 1,
+                ScannedDate = DateTime.Now,
+                ZoneId = 1
+            });
             Console.WriteLine("Hello World!");
         }
     }

@@ -8,9 +8,24 @@ namespace DataAccess.Implementation
 {
     public class InventoryDao : BaseConnection, IInventoryDao
     {
+        public void AddInventoryEvent(InventoryEventDto inventoryEvent)
+        {
+            NonResultQuerry(InventorySql.AddInventoryEvent(inventoryEvent));
+        }
+
+        public void AddInventoryProduct(InventoryProductDto inventoryProduct)
+        {
+            NonResultQuerry(InventorySql.AddInventoryProduct(inventoryProduct));
+        }
+
         public IEnumerable<InventoryDto> GetActiveInventories()
         {
             return QuerryForList<InventoryDto>(InventorySql.GetAllActiveInventories());
+        }
+
+        public IEnumerable<InventoryProductDto> GetAllInventoryProductsByInventoryId(int inventoryId)
+        {
+            return QuerryForList<InventoryProductDto>(InventorySql.GetInventoryProductsByInventoryId(inventoryId));
         }
 
         public InventoryDto GetInventoryById(int inventoryId)
@@ -21,6 +36,11 @@ namespace DataAccess.Implementation
         public IEnumerable<InventoryEventDto> GetInventoryEventsByInventoryId(int invenoryId)
         {
             return QuerryForList<InventoryEventDto>(InventorySql.GetInventoryEventsByInventoryId(invenoryId));
+        }
+
+        public InventoryProductDto GetInventoryProductByProductId(int productId)
+        {
+            return QueryForObject<InventoryProductDto>(InventorySql.GetInventoryProductByProductId(productId));
         }
     }
 }

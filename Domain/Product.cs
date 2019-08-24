@@ -15,6 +15,8 @@ namespace Domain
 
         public int OwnerId { get; set; }
 
+        public int ZoneId { get; set; }
+
         public static Product FromDto(ProductDto dto)
         {
             return new Product
@@ -22,7 +24,8 @@ namespace Domain
                 Id = dto.Id,
                 Status = new ProductStatus().GetById(dto.ProductStatusId),
                 Type = new ProductType().GetById(dto.ProductTypeId),
-                OwnerId = dto.OwnerId
+                OwnerId = dto.OwnerId,
+                ZoneId = dto.ZoneId
             };
         }
 
@@ -33,7 +36,8 @@ namespace Domain
                 Id = Id,
                 ProductStatusId = Status.Id,
                 ProductTypeId = Type.Id,
-                OwnerId = OwnerId
+                OwnerId = OwnerId,
+                ZoneId = ZoneId
             };
         }
     }

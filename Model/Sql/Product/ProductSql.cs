@@ -8,8 +8,9 @@ namespace DataAccess.Sql.Product
             return $"SELECT " +
                 $"ID AS Id," +
                 $"OWNER_ID AS OwnerId," +
-                $"PRODTUCT_TYPE_ID as ProductTypeId," +
-                $"PRODUCT_STATUS_ID as ProductStatusID FROM PRODUCT WHERE ID = {id}";
+                $"PRODUCT_TYPE_ID as ProductTypeId," +
+                $"PRODUCT_STATUS_ID as ProductStatusId, " +
+                $"ZONE_ID as ZoneId FROM PRODUCT WHERE ID = {id}";
         }
     }
 }
