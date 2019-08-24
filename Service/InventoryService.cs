@@ -2,6 +2,7 @@
 using DataAccess.Interfaces.Product;
 using DataTransfer.Inventory;
 using Domain;
+using Domain.Types;
 using Service.Interface;
 using System;
 
@@ -34,7 +35,7 @@ namespace Service
                         Description = $"Product {inventoryProduct.ProductId} does not exist in Product table",
                         EventDate = DateTime.Now,
                         InventoryId = inventoryProduct.InventoryId,
-                        EventType = 7 // TODO Add this into static type object
+                        EventType = (int)InventoryEventTypeEnum.NotExisitingProductScanned
                     };
 
                     return;
@@ -49,7 +50,7 @@ namespace Service
                         Description = $"Product {inventoryProduct.ProductId} was already scanned",
                         EventDate = DateTime.Now,
                         InventoryId = inventoryProduct.InventoryId,
-                        EventType = 6 // TODO Add this into static type object
+                        EventType = (int)InventoryEventTypeEnum.DuplicateScanned
                     };
                 }
 
@@ -60,7 +61,7 @@ namespace Service
                     Description = $"Product {inventoryProduct.ProductId} was added into inventory {inventoryProduct.InventoryId}",
                     EventDate = DateTime.Now,
                     InventoryId = inventoryProduct.InventoryId,
-                    EventType = 5 // TODO Add this into static type object
+                    EventType = (int)InventoryEventTypeEnum.ProductAdded
                 };
 
             }
@@ -71,7 +72,7 @@ namespace Service
                     Description = e.Message,
                     EventDate = DateTime.Now,
                     InventoryId = inventoryProduct.InventoryId,
-                    EventType = 11 // TODO Add this into static type object
+                    EventType = (int)InventoryEventTypeEnum.UnknownError
                 };
             }
             finally
