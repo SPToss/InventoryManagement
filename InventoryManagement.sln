@@ -5,17 +5,19 @@ VisualStudioVersion = 15.0.28307.645
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "View", "WpfApp1\View.csproj", "{4BCF88D5-7B13-4C5D-8170-EC0DA4A80B0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "Model\DataAccess.csproj", "{069D7239-7CFF-499F-89CC-583700FEDEE5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "Model\DataAccess.csproj", "{069D7239-7CFF-499F-89CC-583700FEDEE5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Service\Service.csproj", "{1A7D3692-8815-40F8-AF33-711D22F7A153}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service", "Service\Service.csproj", "{1A7D3692-8815-40F8-AF33-711D22F7A153}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DebugConsole", "DebugConsole\DebugConsole.csproj", "{57C47D6F-6548-47F9-9146-0DC2BE272437}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DebugConsole", "DebugConsole\DebugConsole.csproj", "{57C47D6F-6548-47F9-9146-0DC2BE272437}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestApi", "RestApi\RestApi.csproj", "{2EA41C7B-696C-4879-BC98-C857ECC204AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApi", "RestApi\RestApi.csproj", "{2EA41C7B-696C-4879-BC98-C857ECC204AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataTransfer", "DataTransfer\DataTransfer.csproj", "{836E5269-F877-432F-B30D-C7DF744E625E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataTransfer", "DataTransfer\DataTransfer.csproj", "{836E5269-F877-432F-B30D-C7DF744E625E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{9C589826-B1A8-468C-A846-DF7C650C2A36}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{9C589826-B1A8-468C-A846-DF7C650C2A36}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService", "UserService\UserService.csproj", "{4C90ECD2-C20F-4493-91F6-6746D11032D5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{9C589826-B1A8-468C-A846-DF7C650C2A36}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C589826-B1A8-468C-A846-DF7C650C2A36}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C589826-B1A8-468C-A846-DF7C650C2A36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C90ECD2-C20F-4493-91F6-6746D11032D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C90ECD2-C20F-4493-91F6-6746D11032D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C90ECD2-C20F-4493-91F6-6746D11032D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C90ECD2-C20F-4493-91F6-6746D11032D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
