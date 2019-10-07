@@ -7,36 +7,40 @@ namespace UserService
 {
     public class HashService
     {
-        public Tuple<string,string> HashString(string stringToHash)
+        private readonly HashAlgorithm _hashAlgorithm;
+        private readonly RandomNumberGenerator _randomNumberGenerator;
+
+        public HashService(HashAlgorithm hashAlgorithm, RandomNumberGenerator randomNumberGenerator)
         {
-            HashAlgorithm algorithm = new SHA384Managed();
-
-            var byteValue = Encoding.UTF8.GetBytes(stringToHash);
-
-            RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
-            byte[] salt = new byte[128];
-            rng.GetBytes(salt);
-
-            var saltedValue = byteValue.Concat(salt).ToArray();
-
-            var hash = algorithm.ComputeHash(saltedValue);
-
-            return new Tuple<string, string>(Convert.ToBase64String(hash), Convert.ToBase64String(salt)); 
+            _hashAlgorithm = hashAlgorithm;
+            _randomNumberGenerator = randomNumberGenerator;
         }
 
-        public Tuple<string, string> HashString(string stringToHash, string salt)
+        public (string hash, string salt) HashString(string stringToHash)
         {
-            HashAlgorithm algorithm = new SHA384Managed();
+            var byteValue = Encoding.UTF8.GetBytes(stringToHash);
 
+            byte[] salt = new byte[128];
+            _randomNumberGenerator.GetBytes(salt);
+             
+            var saltedValue = byteValue.Concat(salt).ToArray();
+
+            var hash = _hashAlgorithm.ComputeHash(saltedValue);
+
+            return (Convert.ToBase64String(hash), Convert.ToBase64String(salt)); 
+        }
+
+        public (string hash, string salt) HashString(string stringToHash, string salt)
+        {
             var byteValue = Encoding.UTF8.GetBytes(stringToHash);
 
             var byteSalt = Convert.FromBase64String(salt);
 
             var saltedValue = byteValue.Concat(byteSalt).ToArray();
 
-            var hash = algorithm.ComputeHash(saltedValue);
+            var hash = _hashAlgorithm.ComputeHash(saltedValue);
 
-            return new Tuple<string, string>(Convert.ToBase64String(hash), salt);
+            return (Convert.ToBase64String(hash), salt);
         }
     }
 }
