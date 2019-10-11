@@ -18,6 +18,7 @@ namespace UserService
 
         public (string hash, string salt) HashString(string stringToHash)
         {
+            
             var byteValue = Encoding.UTF8.GetBytes(stringToHash);
 
             byte[] salt = new byte[128];
