@@ -2,10 +2,11 @@
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using UserService.Interface;
 
 namespace UserService
 {
-    public class HashService
+    public sealed class HashService : IHashService
     {
         private readonly HashAlgorithm _hashAlgorithm;
         private readonly RandomNumberGenerator _randomNumberGenerator;
