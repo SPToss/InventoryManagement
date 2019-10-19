@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DataAccess.Implementation;
+using System;
+using System.Security.Cryptography;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using UserService;
+using UserService.Interface;
 
 namespace InventoryManagement
 {
@@ -19,14 +12,37 @@ namespace InventoryManagement
     /// </summary>
     public partial class LoginWindow : Window
     {
+        private IUserService _userService;
+
         public LoginWindow()
         {
             InitializeComponent();
+            _userService = new UserService.UserService(new HashService(new SHA384Managed(), new RNGCryptoServiceProvider()), new UserDao());
         }
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
+            bool isSuccess = false;
+            try
+            {
+                isSuccess = _userService.Authorize(Login.Text, Password.Password);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error durring login process", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
+            if (!isSuccess)
+            {
+                MessageBox.Show("Invalid User name or Password", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            this.Hide();
+            MainWindow mainWindow = new MainWindow();
+
+            mainWindow.ShowDialog();
+           
         }
     }
 }

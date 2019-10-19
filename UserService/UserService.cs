@@ -25,6 +25,11 @@ namespace UserService
 
             try // TODO Introduce custom exception 
             {
+                if (UserContext.IsUserLoggedIn())
+                {
+                    throw new Exception("User is already logged");
+                }
+
                 if (string.IsNullOrWhiteSpace(login) || string.IsNullOrWhiteSpace(password))
                 {
                     throw new Exception("Empty login atempt");
@@ -51,6 +56,8 @@ namespace UserService
                     throw new Exception("Invalid user");
                 }
 
+                UserContext.SetUser(User.FromDto(user));
+
                 historyItem = new UserHistoryDto
                 {
                     UserId = user.UserId,
@@ -61,7 +68,6 @@ namespace UserService
 
                 isSucces = true;
             }
-
             catch (Exception e)
             {
                 historyItem = new UserHistoryDto
