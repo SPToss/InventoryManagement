@@ -5,8 +5,39 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InventoryManagement"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="850" Width="1200"
+        ResizeMode="CanMinimize"
+        WindowStartupLocation="CenterScreen">
     <Grid>
-        
+        <TabControl HorizontalAlignment="Left" Height="850" VerticalAlignment="Top" Width="1200" TabStripPlacement="Left" Margin="0,0,0,0">
+            <TabControl.Resources>
+                <Style TargetType="{x:Type TabItem}">
+                    <Setter Property="HeaderTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <ContentPresenter Content="{TemplateBinding Content}">
+                                    <ContentPresenter.LayoutTransform>
+                                        <RotateTransform Angle="270" />
+                                    </ContentPresenter.LayoutTransform>
+                                </ContentPresenter>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="Padding" Value="3" />
+                </Style>
+            </TabControl.Resources>
+            <TabItem Header="Product" Width="50" Height="75" x:Name="ProductTab">
+                <Grid>
+                    <Label Content="Owner" Margin="24,45,1018,769" x:Name="OwnerLabel" Width="100" Height="30"/>
+                    <ComboBox x:Name="OwnerCombo" Width="100" Height="30" Margin="100,45,942,769"></ComboBox>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Inventory" Width="50" Height="75" x:Name="InventoryTab">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem Header="User" Width="50" Height="75" x:Name="UserTab" Visibility="Hidden">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>

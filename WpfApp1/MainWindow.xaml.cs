@@ -1,16 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using InventoryManagement.ViewController;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace InventoryManagement
 {
@@ -19,9 +8,17 @@ namespace InventoryManagement
     /// </summary>
     public partial class MainWindow : Window
     {
+        private MainWindowViewController _mainWindowViewController = new MainWindowViewController();
+
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = _mainWindowViewController;
+
+            if (_mainWindowViewController.CanModifyUserData)
+            {
+                UserTab.Visibility = Visibility.Visible;
+            }
         }
     }
 }

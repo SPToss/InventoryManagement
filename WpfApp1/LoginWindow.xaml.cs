@@ -2,6 +2,7 @@
 using System;
 using System.Security.Cryptography;
 using System.Windows;
+using System.Windows.Input;
 using UserService;
 using UserService.Interface;
 
@@ -18,9 +19,26 @@ namespace InventoryManagement
         {
             InitializeComponent();
             _userService = new UserService.UserService(new HashService(new SHA384Managed(), new RNGCryptoServiceProvider()), new UserDao());
+
+            #region events
+            KeyDown += new KeyEventHandler(KeyDownEventHandler);
+            #endregion events
         }
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
+        {
+            Authorize();
+        }
+
+        private void KeyDownEventHandler(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter)
+            {
+                Authorize();
+            }
+        }
+
+        private void Authorize()
         {
             bool isSuccess = false;
             try
@@ -40,9 +58,8 @@ namespace InventoryManagement
 
             this.Hide();
             MainWindow mainWindow = new MainWindow();
-
+            mainWindow.Owner = this.Owner;
             mainWindow.ShowDialog();
-           
         }
     }
 }
