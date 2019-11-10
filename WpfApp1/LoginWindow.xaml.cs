@@ -1,11 +1,7 @@
-﻿using DataAccess.Implementation;
-using Domain;
-using Ninject;
+﻿using Ninject;
 using System;
-using System.Security.Cryptography;
 using System.Windows;
 using System.Windows.Input;
-using UserService;
 using UserService.Interface;
 
 namespace InventoryManagement
@@ -21,7 +17,6 @@ namespace InventoryManagement
         {
             InitializeComponent();
             _userService = NinjectContainer.Container.Get<IUserService>();
-//            _userService = new UserService.UserService(new HashService(new SHA384Managed(), new RNGCryptoServiceProvider()), new UserDao());
 
             #region events
             KeyDown += new KeyEventHandler(KeyDownEventHandler);
@@ -64,7 +59,7 @@ namespace InventoryManagement
             }
 
             this.Hide();
-            MainWindow mainWindow = new MainWindow();
+            MainWindow mainWindow = NinjectContainer.Container.Get<MainWindow>();
             mainWindow.Owner = this.Owner;
             mainWindow.ShowDialog();
         }
