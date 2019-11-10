@@ -25,6 +25,8 @@ namespace InventoryManagement
             #endregion events
         }
 
+        #region eventHandlersImplementation
+
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             Authorize();
@@ -37,6 +39,8 @@ namespace InventoryManagement
                 Authorize();
             }
         }
+
+        #endregion eventHandlersImplementation
 
         private void Authorize()
         {
