@@ -1,4 +1,6 @@
 ﻿using DataAccess.Implementation;
+using Domain;
+using Ninject;
 using System;
 using System.Security.Cryptography;
 using System.Windows;
@@ -18,7 +20,8 @@ namespace InventoryManagement
         public LoginWindow()
         {
             InitializeComponent();
-            _userService = new UserService.UserService(new HashService(new SHA384Managed(), new RNGCryptoServiceProvider()), new UserDao());
+            _userService = NinjectContainer.Container.Get<IUserService>();
+//            _userService = new UserService.UserService(new HashService(new SHA384Managed(), new RNGCryptoServiceProvider()), new UserDao());
 
             #region events
             KeyDown += new KeyEventHandler(KeyDownEventHandler);
