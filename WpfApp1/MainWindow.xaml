@@ -30,12 +30,23 @@
                 <Grid>
                     <Label Content="Owner" Margin="24,45,1018,769" x:Name="OwnerLabel" Width="100" Height="30"/>
                     <ComboBox x:Name="OwnerCombo" Width="100" Height="30" Margin="100,45,942,769"></ComboBox>
+
+                    <DataGrid  
+                        ItemsSource="{Binding Products, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"          
+                        CanUserReorderColumns="True" 
+                        CanUserResizeColumns="True" 
+                        CanUserResizeRows="False" 
+                        CanUserSortColumns="True"  
+                        Margin="25,250,25,40"
+                        AutoGenerateColumns="True"
+                        ColumnWidth="*"
+                        x:Name="ProductDataGird"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Inventory" Width="50" Height="75" x:Name="InventoryTab">
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
-            <TabItem Header="User" Width="50" Height="75" x:Name="UserTab" Visibility="Hidden">
+            <TabItem Header="User" Width="50" Height="75" x:Name="UserTab">
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
         </TabControl>
