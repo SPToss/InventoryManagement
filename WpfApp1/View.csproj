@@ -81,7 +81,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Extension\ExtensionMethods.cs" />
     <Compile Include="NinjectContainer.cs" />
     <Compile Include="ViewController\MainWindowViewController.cs" />
     <Page Include="LoginWindow.xaml">
