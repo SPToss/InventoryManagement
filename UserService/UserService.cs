@@ -17,18 +17,13 @@ namespace UserService
             _userDao = userDao;
         }
 
-        public bool Authorize(string login, string password)
+        public User Authorize(string login, string password)
         {
             UserHistoryDto historyItem = null;
-            bool isSucces = false;
-
+            User user = null;
 
             try // TODO Introduce custom exception 
             {
-                if (UserContext.IsUserLoggedIn())
-                {
-                    throw new Exception("User is already logged");
-                }
 
                 if (string.IsNullOrWhiteSpace(login) || string.IsNullOrWhiteSpace(password))
                 {
@@ -39,34 +34,33 @@ namespace UserService
 
                 if (string.IsNullOrWhiteSpace(salt))
                 {
-                    throw new Exception("Invalid user"); 
+                    throw new Exception("Invalid user");
                 }
 
                 var hash = _hashService.HashString(password, salt);
 
-                 var user = _userDao.Authorize(new UserCredential
+                var userDto = _userDao.Authorize(new UserCredential
                 {
 
                     Hash = hash.hash,
                     Login = login
                 });
 
-                if(user == null)
+                if (userDto == null)
                 {
                     throw new Exception("Invalid user");
                 }
 
-                UserContext.SetUser(User.FromDto(user));
 
                 historyItem = new UserHistoryDto
                 {
-                    UserId = user.UserId,
+                    UserId = userDto.UserId,
                     EventDate = DateTime.Now,
                     Description = "User Authorized",
                     UserHistoryTypeId = 1
                 };
 
-                isSucces = true;
+                user = User.FromDto(userDto);
             }
             catch (Exception e)
             {
@@ -78,14 +72,14 @@ namespace UserService
                     UserHistoryTypeId = 2
                 };
 
-                isSucces = false;
+                user = null;
             }
             finally
             {
                 _userDao.SaveUserHistoryEvent(historyItem);
             }
 
-            return isSucces;
+            return user;
         }
     }
 }

@@ -1,34 +1,33 @@
 ﻿using DataAccess.Implementation;
 using Domain;
+using InventoryManagement;
 using Microsoft.AspNetCore.Mvc;
+using Ninject;
 using RestApi.Models;
+using RestApi.Models.Product;
 using Service;
 using Service.Interface;
+using System.Linq;
 
 namespace RestApi.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ProductController : ControllerBase
+    public class ProductController : InventoryManagementApiBase
     {
         private IProductService _productService;
 
-        public ProductController()
+        [HttpPost]
+        [ProducesResponseType(200, Type = typeof(ProductSearchTypeModel))]
+        public ActionResult<ProductSearchTypeModel> GetAllActiveProductSearches()
         {
-            InitateObjects();
+            var productSearches = _productService.GetAllActiveProductSearches();
+
+            return Ok(productSearches.Select(ProductSearchTypeModel.FromDomain));
+
         }
 
-        [HttpGet("{id}")]
-        public ActionResult<ProductModel> GetProductById(int id)
+        protected override void InitializeController()
         {
-            Product product = _productService.GetProductById(id);
-
-            return ProductModel.FormDomain(product);
-        }
-
-        private void InitateObjects()
-        {
-            _productService = new ProductService(new ProductDao());
+            _productService = NinjectContainer.Container.Get<IProductService>();
         }
     }
 }

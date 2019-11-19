@@ -12,5 +12,10 @@ namespace DataAccess.Sql.Product
                 $"PRODUCT_STATUS_ID as ProductStatusId, " +
                 $"ZONE_ID as ZoneId FROM PRODUCT WHERE ID = {id}";
         }
+
+        public static string GetAllActiveProductSearches()
+        {
+            return "SELECT ID as SearchTypeId, DESCRIPTION as SearchTypeDescription FROM PRODUCT_SEARCH_TYPE";
+        }
     }
 }

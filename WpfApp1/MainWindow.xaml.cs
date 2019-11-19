@@ -1,8 +1,4 @@
-﻿using Domain;
-using InventoryManagement.Extension;
-using InventoryManagement.ViewController;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using InventoryManagement.ViewController;
 using System.Windows;
 
 namespace InventoryManagement

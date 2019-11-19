@@ -1,8 +1,10 @@
 ﻿using Ninject;
+using RestApi.Client.Interface;
 using System;
 using System.Windows;
 using System.Windows.Input;
-using UserService.Interface;
+using RestApi.Client.Dto.Response.User;
+using RestApi.Client.Dto.Request.User;
 
 namespace InventoryManagement
 {
@@ -11,12 +13,12 @@ namespace InventoryManagement
     /// </summary>
     public partial class LoginWindow : Window
     {
-        private IUserService _userService;
+        private IRestApiClient _restApiClient;
 
         public LoginWindow()
         {
             InitializeComponent();
-            _userService = NinjectContainer.Container.Get<IUserService>();
+            _restApiClient = NinjectContainer.Container.Get<IRestApiClient>();
 
             #region events
             KeyDown += new KeyEventHandler(KeyDownEventHandler);
@@ -42,17 +44,21 @@ namespace InventoryManagement
 
         private void Authorize()
         {
-            bool isSuccess = false;
+            UserResponseDto user = null;
             try
             {
-                isSuccess = _userService.Authorize(Login.Text, Password.Password);
+                user = _restApiClient.Authorize(new UserAuthorizeRequestDto
+                {
+                    Login = Login.Text,
+                    Password = Password.Password
+                });
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error durring login process", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
-            if (!isSuccess)
+            if (user == null)
             {
                 MessageBox.Show("Invalid User name or Password", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;

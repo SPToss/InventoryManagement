@@ -10,7 +10,7 @@ namespace RestApi.Models
 
         public ProductTypeModel Type { get; set; }
 
-        public static ProductModel FormDomain(Product product)
+        public static ProductModel FormDomain(Domain.Product product)
         {
             return new ProductModel
             {

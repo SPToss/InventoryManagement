@@ -2,7 +2,7 @@
 
 namespace UserService
 {
-    internal sealed class User
+    public sealed class User
     {
         public int UserId { get; set; }
 

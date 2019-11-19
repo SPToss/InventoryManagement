@@ -40,7 +40,13 @@
                         Margin="25,250,25,40"
                         AutoGenerateColumns="True"
                         ColumnWidth="*"
-                        x:Name="ProductDataGird"/>
+                        x:Name="ProductDataGird"
+                        CanUserAddRows="False"
+                        CanUserDeleteRows="False"
+                        IsReadOnly="True">
+                    </DataGrid>
+                    <ComboBox x:Name="ProductSearchOption" Height="30" Margin="24,215,131,599"/>
+                    <Button x:Name="ProductSearch" Height="30" Margin="1016,215,25,599" Content="Search"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Inventory" Width="50" Height="75" x:Name="InventoryTab">

@@ -1,13 +1,7 @@
-﻿using DataTransfer.ProductType;
-using Domain;
-using System;
-using System.Collections.Generic;
+﻿using RestApi.Client.Dto.Response.Product;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InventoryManagement.ViewController
 {
@@ -16,7 +10,7 @@ namespace InventoryManagement.ViewController
         public bool CanModifyUserData => true;
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public ObservableCollection<Product> Products { get; set; } = new ObservableCollection<Product>();
+        public ObservableCollection<ProductDto> Products { get; set; } = new ObservableCollection<ProductDto>();
 
         public MainWindowViewController()
         {

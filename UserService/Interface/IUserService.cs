@@ -2,6 +2,6 @@
 {
     public interface IUserService
     {
-        bool Authorize(string login, string password);
+        User Authorize(string login, string password);
     }
 }
