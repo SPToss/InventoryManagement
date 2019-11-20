@@ -10,5 +10,12 @@ namespace Domain.Types
         public ProductStatus() : base(new ProductStatusDao().GetAllProductStatuses)
         {
         }
+
+        public ProductStatusDto Active => GetById(1);
+
+        public ProductStatusDto Missing => GetById(2);
+
+        public ProductStatusDto Damaged => GetById(3);
+
     }
 }

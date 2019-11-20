@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
+using RestApi.Client.Dto.Request.Product;
 using RestApi.Client.Dto.Request.User;
+using RestApi.Client.Dto.Response.Product;
 using RestApi.Client.Dto.Response.User;
 using RestApi.Client.Interface;
 using RestSharp;
@@ -22,6 +24,19 @@ namespace RestApi.Client
 
         #endregion User
 
+        #region Product
+
+        public List<ProductSearchTypeDto> GetAllProductSearchTypes()
+        {
+            return CallRestApiWithPost<List<ProductSearchTypeDto>, object>("/Product/GetAllActiveProductSearches/", null);
+        }
+
+        public List<ProductDto> GetProductBySearchId(GetProductBySearchTypeDto getProductBySearchTypeDto)
+        {
+            return CallRestApiWithPost<List<ProductDto>, GetProductBySearchTypeDto>("/Product/GetProductBySearchId/", getProductBySearchTypeDto);
+        }
+
+        #endregion Product
 
         private T CallRestApiWithPost<T,Tu>(string address, Tu param)
         {

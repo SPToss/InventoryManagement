@@ -1,15 +1,21 @@
-﻿namespace RestApi.Client.Dto.Response.Product
+﻿using RestApi.Client.Dto.Owner;
+using RestApi.Client.Dto.Product;
+using RestApi.Client.Dto.Response.Zone;
+
+namespace RestApi.Client.Dto.Response.Product
 {
     public class ProductDto
     {
         public int Id { get; set; }
 
-        public int Status { get; set; }
+        public ProductStatusDto Status { get; set; }
 
-        public int Type { get; set; }
+        public ProductTypeDto Type { get; set; }
 
-        public int OwnerId { get; set; }
+        public OwnerDto Owner { get; set; }
 
-        public int ZoneId { get; set; }
+        public ZoneDto Zone { get; set; }
+
+        public string Description { get; set; }
     }
 }

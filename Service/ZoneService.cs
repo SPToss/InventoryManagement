@@ -48,5 +48,12 @@ namespace Service
 
             return zones;
         }
+
+        public Zone GetZoneById(int zoneId)
+        {
+            var zoneDto = _zoneDao.GetZoneById(zoneId);
+
+            return Zone.FromDto(zoneDto);
+        }
     }
 }

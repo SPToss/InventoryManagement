@@ -29,6 +29,7 @@ namespace InventoryManagement
             Container.Bind<IInventoryService>().To<InventoryService>();
             Container.Bind<IProductService>().To<ProductService>();
             Container.Bind<IZoneService>().To<ZoneService>();
+            Container.Bind<IOwnerService>().To<OwnerService>();
             
             #endregion ServiceBind
 

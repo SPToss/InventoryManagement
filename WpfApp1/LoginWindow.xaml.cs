@@ -63,7 +63,7 @@ namespace InventoryManagement
                 MessageBox.Show("Invalid User name or Password", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-
+            UserContext.SetUser(user);
             this.Hide();
             MainWindow mainWindow = NinjectContainer.Container.Get<MainWindow>();
             mainWindow.Owner = this.Owner;

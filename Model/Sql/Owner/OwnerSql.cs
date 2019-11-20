@@ -4,11 +4,11 @@
     {
         public static string GetOwnerById(int ownerId)
         {
-            return $"SLECT ID as Id " +
-                    $"NAME as Name" +
-                    $"LOCATION as Location " +
-                    $"ACTIVE as Actice " +
-                    $"FORM OWNER WHERE ID = {ownerId}";
+            return $"SELECT ID as Id, " +
+                    $"NAME as Name," +
+                    $"LOCATION as Location, " +
+                    $"ACTIVE as Active " +
+                    $"FROM OWNER WHERE ID = {ownerId}";
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Domain;
+﻿using RestApi.Models.Owner;
+using RestApi.Models.Zone;
 
 namespace RestApi.Models
 {
@@ -10,13 +11,22 @@ namespace RestApi.Models
 
         public ProductTypeModel Type { get; set; }
 
+        public OwnerModel Owner { get; set; }
+
+        public ZoneModel Zone { get; set; }
+
+        public string Description { get; set; }
+
         public static ProductModel FormDomain(Domain.Product product)
         {
             return new ProductModel
             {
                 Id = product.Id,
                 Status = ProductStatusModel.FormDto(product.Status),
-                Type = ProductTypeModel.FormDto(product.Type)
+                Type = ProductTypeModel.FormDto(product.Type),
+                Description = product.Description,
+                Owner = OwnerModel.FromDomain(product.Owner),
+                Zone = ZoneModel.FormDomain(product.Zone)
             };
         }
     }

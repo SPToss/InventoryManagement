@@ -1,4 +1,5 @@
-﻿using DataTransfer.Product;
+﻿using DataAccess.Interfaces.Owner;
+using DataTransfer.Product;
 using DataTransfer.ProductStatus;
 using DataTransfer.ProductType;
 using Domain.Types;
@@ -13,9 +14,11 @@ namespace Domain
 
         public ProductTypeDto Type { get; set; }
 
-        public int OwnerId { get; set; }
+        public Owner Owner { get; set; }
 
-        public int ZoneId { get; set; }
+        public Zone Zone { get; set; }
+
+        public string Description { get; set; }
 
         public static Product FromDto(ProductDto dto)
         {
@@ -24,8 +27,7 @@ namespace Domain
                 Id = dto.Id,
                 Status = new ProductStatus().GetById(dto.ProductStatusId),
                 Type = new ProductType().GetById(dto.ProductTypeId),
-                OwnerId = dto.OwnerId,
-                ZoneId = dto.ZoneId
+                Description = dto.Description
             };
         }
 
@@ -36,8 +38,9 @@ namespace Domain
                 Id = Id,
                 ProductStatusId = Status.Id,
                 ProductTypeId = Type.Id,
-                OwnerId = OwnerId,
-                ZoneId = ZoneId
+                OwnerId = Owner.Id,
+                ZoneId = Zone.Id,
+                Description = Description
             };
         }
     }

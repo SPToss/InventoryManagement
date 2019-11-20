@@ -13,7 +13,7 @@ namespace Domain
 
         public bool Active { get; set; }
 
-        public static Owner ToDomain(OwnerDto dto)
+        public static Owner FromDto(OwnerDto dto)
         {
             return new Owner
             {

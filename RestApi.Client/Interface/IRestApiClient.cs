@@ -1,5 +1,8 @@
-﻿using RestApi.Client.Dto.Request.User;
+﻿using RestApi.Client.Dto.Request.Product;
+using RestApi.Client.Dto.Request.User;
+using RestApi.Client.Dto.Response.Product;
 using RestApi.Client.Dto.Response.User;
+using System.Collections.Generic;
 
 namespace RestApi.Client.Interface
 {
@@ -13,6 +16,10 @@ namespace RestApi.Client.Interface
 
 
         #region Product
+
+        List<ProductSearchTypeDto> GetAllProductSearchTypes();
+
+        List<ProductDto> GetProductBySearchId(GetProductBySearchTypeDto getProductBySearchTypeDto);
         #endregion Product
     }
 }

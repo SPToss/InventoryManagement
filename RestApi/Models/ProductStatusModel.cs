@@ -1,4 +1,5 @@
 ﻿using DataTransfer.ProductStatus;
+using System.Runtime.Serialization;
 
 namespace RestApi.Models
 {

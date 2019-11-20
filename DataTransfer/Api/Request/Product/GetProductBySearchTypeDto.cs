@@ -2,7 +2,7 @@
 
 namespace DataTransfer.Api.Request.Product
 {
-    public class GetProductBySearchType
+    public class GetProductBySearchTypeDto
     {
         public int ProductSearchTypeId { get; set; }
 

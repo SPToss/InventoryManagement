@@ -28,11 +28,38 @@
             </TabControl.Resources>
             <TabItem Header="Product" Width="50" Height="75" x:Name="ProductTab">
                 <Grid>
-                    <Label Content="Owner" Margin="24,45,1018,769" x:Name="OwnerLabel" Width="100" Height="30"/>
-                    <ComboBox x:Name="OwnerCombo" Width="100" Height="30" Margin="100,45,942,769"></ComboBox>
+                    <Label Content="Owner" Margin="853,37,189,777" x:Name="OwnerLabel" Width="100" Height="30"/>
+                    <ComboBox x:Name="OwnerCombo" Height="30" Margin="916,37,26,777"/>
+
+                    <Label Content="Product Description" Margin="24,72,983,742" x:Name="ProductDescriptionLabel" Height="30"/>
+                    <TextBox x:Name="ProductDescription" Margin="24,107,131,637" Text="{Binding SelectedProduct.ProductDescription}"/>
+
+                    <Label Content="Product Type" Margin="24,37,1018,777" x:Name="ProductTypeLabel" Width="100" Height="30"/>
+                    <ComboBox x:Name="ProductTypeCombo" Height="30" Margin="115,37,827,777"/>
+
+                    <Label Content="Satus" Margin="316,37,726,777" x:Name="StatusDescriptionLabel" Width="100" Height="30"/>
+                    <ComboBox x:Name="StatusDescriptionCombo" Height="30" Margin="360,37,582,777"/>
+
+                    <Label Content="Zone" Margin="581,37,447,777" x:Name="ZoneDescriptionLabel" Height="30"/>
+                    <ComboBox x:Name="ZoneDescriptionCombo" Height="30" Margin="634,37,308,777"/>
+
+                    <Button x:Name="NewEditButton"
+                        Height="30" 
+                        Margin="1016,177,26,637"  
+                        Content="Save"/>
+                    
+                    <Button x:Name="DeleteButton"
+                        Height="30" 
+                        Margin="1016,142,25,672"
+                        Content="Delete" Click="DeleteButton_Click"/>
+
+                    <Button x:Name="NewButton"
+                        Height="30" 
+                        Margin="1016,107,25,707"
+                        Content="New" Click="NewButton_Click"/>
 
                     <DataGrid  
-                        ItemsSource="{Binding Products, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"          
+                        ItemsSource="{Binding ProductViewModels, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"          
                         CanUserReorderColumns="True" 
                         CanUserResizeColumns="True" 
                         CanUserResizeRows="False" 
@@ -43,10 +70,22 @@
                         x:Name="ProductDataGird"
                         CanUserAddRows="False"
                         CanUserDeleteRows="False"
-                        IsReadOnly="True">
+                        IsReadOnly="True"
+                        SelectedItem="{Binding SelectedProduct, UpdateSourceTrigger=PropertyChanged}">
                     </DataGrid>
-                    <ComboBox x:Name="ProductSearchOption" Height="30" Margin="24,215,131,599"/>
-                    <Button x:Name="ProductSearch" Height="30" Margin="1016,215,25,599" Content="Search"/>
+                    <ComboBox ItemsSource="{Binding Path=ProductSearchTypes}"
+                              DisplayMemberPath="SearchTypeDescription"
+                              SelectedValuePath="SearchTypeId"
+                              SelectedValue="{Binding Path=SelectedSearchId}"
+                              x:Name="ProductSearchOption" 
+                              Height="30" 
+                              Margin="24,215,131,599"
+                              SelectedIndex="0"
+                              IsSynchronizedWithCurrentItem="True"/>
+                    <Button x:Name="ProductSearch"
+                            Height="30" 
+                            Margin="1016,215,25,599" 
+                            Content="Search" Click="ProductSearch_Click"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Inventory" Width="50" Height="75" x:Name="InventoryTab">
