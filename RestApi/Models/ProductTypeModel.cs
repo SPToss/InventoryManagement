@@ -20,5 +20,15 @@ namespace RestApi.Models
                 Id = dto.Id
             };
         }
+
+        public ProductTypeDto ToDto()
+        {
+            return new ProductTypeDto
+            {
+                Active = Active ? 1 : 0,
+                Description = Description,
+                Id = Id
+            };
+        }
     }
 }

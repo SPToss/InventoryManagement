@@ -8,5 +8,7 @@ namespace Service.Interface
     {
         Zone GetZoneById(int zoneId);
         IEnumerable<Zone> GetAllChildZones(int zoneId);
+
+        IEnumerable<Zone> GetAllActiveZones();
     }
 }

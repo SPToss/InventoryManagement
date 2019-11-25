@@ -20,5 +20,15 @@ namespace RestApi.Models
                 Id = dto.Id
             };
         }
+
+        public ProductStatusDto ToDto()
+        {
+            return new ProductStatusDto
+            {
+                Active = Active ? 1 : 0,
+                Description = Description,
+                Id = Id
+            };
+        }
     }
 }

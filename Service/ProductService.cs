@@ -3,6 +3,8 @@ using System.Linq;
 using DataAccess.Interfaces.Product;
 using DataTransfer.Api.Request.Product;
 using DataTransfer.Product;
+using DataTransfer.ProductStatus;
+using DataTransfer.ProductType;
 using Domain;
 using Domain.Types;
 using Service.Interface;
@@ -72,7 +74,7 @@ namespace Service
                     productDtos = new List<ProductDto>();
                     break;
             }
-
+             
             List<Product> products = new List<Product>();
 
             foreach(var productDto in productDtos)
@@ -86,6 +88,33 @@ namespace Service
             }
 
             return products;
+        }
+
+        public IEnumerable<ProductStatusDto> GetAllProductStatus()
+        {
+            return new ProductStatus().GetAllActive();
+        }
+
+        public IEnumerable<ProductTypeDto> GetAllProductTypes()
+        {
+            return new ProductType().GetAllActive();
+        }
+
+        public void DeleteProduct(int id)
+        {
+            _productDao.DeleteProduct(id);
+        }
+
+        public void InserOrUpdateProduct(Product product)
+        {
+            if(product.Id == 0)
+            {
+                _productDao.InsertProduct(product.ToDto());
+            }
+            else
+            {
+                _productDao.UpdateProduct(product.ToDto());
+            }
         }
     }
 }

@@ -8,5 +8,7 @@ namespace DataAccess.Interfaces.Zone
         ZoneDto GetZoneById(int zoneId);
 
         IEnumerable<ZoneDto> GetAllActiveChildZones(IEnumerable<int> zoneIds);
+
+        IEnumerable<ZoneDto> GetAllActiveZones();
     }
 }

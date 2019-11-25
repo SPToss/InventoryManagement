@@ -26,7 +26,20 @@ namespace RestApi.Models
                 Type = ProductTypeModel.FormDto(product.Type),
                 Description = product.Description,
                 Owner = OwnerModel.FromDomain(product.Owner),
-                Zone = ZoneModel.FormDomain(product.Zone)
+                Zone = ZoneModel.FromDomain(product.Zone)
+            };
+        }
+
+        public Domain.Product ToDomain()
+        {
+            return new Domain.Product
+            {
+                Id = Id,
+                Description = Description,
+                Owner = Owner.ToDomain(),
+                Status = Status.ToDto(),
+                Type = Type.ToDto(),
+                Zone = Zone.ToDomain()
             };
         }
     }

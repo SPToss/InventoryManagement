@@ -15,5 +15,11 @@ namespace DataAccess.Interfaces.Product
         IEnumerable<ProductDto> GetAllActiveProductsForZones(List<ZoneDto> zones);
 
         IEnumerable<ProductDto> GetAllProducts();
+
+        void DeleteProduct(int id);
+
+        void UpdateProduct(ProductDto product);
+
+        void InsertProduct(ProductDto product);
     }
 }

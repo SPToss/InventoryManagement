@@ -1,4 +1,6 @@
 ﻿
+using DataTransfer.Product;
+
 namespace DataAccess.Sql.Product
 {
     public static class ProductSql
@@ -45,6 +47,21 @@ namespace DataAccess.Sql.Product
                     $"PRODUCT_STATUS_ID as ProductStatusId, " +
                     $"DESCRIPTION as Description," +
                     $"ZONE_ID as ZoneId FROM PRODUCT";
+        }
+
+        public static string DeleteProduct(int id)
+        {
+            return $"DELETE FROM PRODUCT WHERE ID = {id}";
+        }
+
+        public static string UpdateProduct(ProductDto productDto)
+        {
+            return $@"UPDATE PRODUCT SET OWNER_ID = {productDto.OwnerId} , PRODUCT_TYPE_ID = {productDto.ProductTypeId} , PRODUCT_STATUS_ID = {productDto.ProductStatusId}, DESCRIPTION = '{productDto.Description}', ZONE_ID = {productDto.ZoneId} WHERE ID = {productDto.Id}";
+        }
+
+        public static string InsertProduct(ProductDto productDto)
+        {
+            return $@"INSERT INTO PRODUCT (ID, OWNER_ID, PRODUCT_TYPE_ID, PRODUCT_STATUS_ID, DESCRIPTION, ZONE_ID) VALUES (NULL,{productDto.OwnerId},{productDto.ProductTypeId},{productDto.ProductStatusId},'{productDto.Description}',{productDto.ZoneId})";
         }
 
         public static string GetAllActiveProductSearches()

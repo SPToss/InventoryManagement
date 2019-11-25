@@ -14,6 +14,11 @@ namespace DataAccess.Implementation
             return QuerryForList<ZoneDto>(ZoneSql.GetAllChildZonesForZoneIds(string.Join(",", zoneIds.ToArray())));
         }
 
+        public IEnumerable<ZoneDto> GetAllActiveZones()
+        {
+            return QuerryForList<ZoneDto>(ZoneSql.GetAllActiveZones());
+        }
+
         public ZoneDto GetZoneById(int zoneId)
         {
             return QueryForObject<ZoneDto>(ZoneSql.GetZoneByIdSql(zoneId));

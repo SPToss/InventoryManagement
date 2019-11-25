@@ -16,6 +16,13 @@ namespace Service
             _zoneDao = zoneDao;
         }
 
+        public IEnumerable<Zone> GetAllActiveZones()
+        {
+            var zonesDto = _zoneDao.GetAllActiveZones();
+
+            return zonesDto.Select(Zone.FromDto);
+        }
+
         public IEnumerable<Zone> GetAllChildZones(int zoneId)
         {
             List<Zone> zones = new List<Zone>();
@@ -48,6 +55,8 @@ namespace Service
 
             return zones;
         }
+
+
 
         public Zone GetZoneById(int zoneId)
         {

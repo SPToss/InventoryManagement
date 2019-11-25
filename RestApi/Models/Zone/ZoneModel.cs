@@ -12,7 +12,7 @@ namespace RestApi.Models.Zone
 
         public bool Active { get; set; }
 
-        public static ZoneModel FormDomain(Domain.Zone zone)
+        public static ZoneModel FromDomain(Domain.Zone zone)
         {
             return new ZoneModel
             {
@@ -20,6 +20,17 @@ namespace RestApi.Models.Zone
                 Description = zone.Description,
                 Id = zone.Id,
                 ParentZoneId = zone.ParentZoneId
+            };
+        }
+
+        public Domain.Zone ToDomain()
+        {
+            return new Domain.Zone
+            {
+                Id = Id,
+                Description = Description,
+                Active = Active,
+                ParentZoneId = ParentZoneId
             };
         }
     }

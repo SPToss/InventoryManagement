@@ -34,5 +34,20 @@ namespace DataAccess.Implementation
         {
             return QueryForObject<ProductDto>(ProductSql.GetProductById(productId));
         }
+
+        public void InsertProduct(ProductDto product)
+        {
+            NonResultQuerry(ProductSql.InsertProduct(product));
+        }
+
+        public void UpdateProduct(ProductDto product)
+        {
+            NonResultQuerry(ProductSql.UpdateProduct(product));
+        }
+
+        public void DeleteProduct(int id)
+        {
+            NonResultQuerry(ProductSql.DeleteProduct(id));
+        }
     }
 }

@@ -29,24 +29,44 @@
             <TabItem Header="Product" Width="50" Height="75" x:Name="ProductTab">
                 <Grid>
                     <Label Content="Owner" Margin="853,37,189,777" x:Name="OwnerLabel" Width="100" Height="30"/>
-                    <ComboBox x:Name="OwnerCombo" Height="30" Margin="916,37,26,777"/>
+                    <ComboBox 
+                        ItemsSource="{Binding Path=AvailableOwners}" 
+                        DisplayMemberPath="Name"
+                        x:Name="OwnerCombo" 
+                        Height="30" 
+                        Margin="916,37,26,777"/>
 
                     <Label Content="Product Description" Margin="24,72,983,742" x:Name="ProductDescriptionLabel" Height="30"/>
-                    <TextBox x:Name="ProductDescription" Margin="24,107,131,637" Text="{Binding SelectedProduct.ProductDescription}"/>
+                    <TextBox x:Name="ProductDescription" Margin="24,107,131,637"/>
 
                     <Label Content="Product Type" Margin="24,37,1018,777" x:Name="ProductTypeLabel" Width="100" Height="30"/>
-                    <ComboBox x:Name="ProductTypeCombo" Height="30" Margin="115,37,827,777"/>
+                    <ComboBox 
+                        ItemsSource="{Binding Path=AvailableProductTypes}" 
+                        DisplayMemberPath="Description"
+                        x:Name="ProductTypeCombo" 
+                        Height="30" 
+                        Margin="115,37,827,777"/>
 
                     <Label Content="Satus" Margin="316,37,726,777" x:Name="StatusDescriptionLabel" Width="100" Height="30"/>
-                    <ComboBox x:Name="StatusDescriptionCombo" Height="30" Margin="360,37,582,777"/>
+                    <ComboBox 
+                        ItemsSource="{Binding Path=AvailableProductStatuses}" 
+                        DisplayMemberPath="Description"
+                        x:Name="StatusDescriptionCombo" 
+                        Height="30" 
+                        Margin="360,37,582,777"/>
 
                     <Label Content="Zone" Margin="581,37,447,777" x:Name="ZoneDescriptionLabel" Height="30"/>
-                    <ComboBox x:Name="ZoneDescriptionCombo" Height="30" Margin="634,37,308,777"/>
+                    <ComboBox 
+                        ItemsSource="{Binding Path=AvailableZones}" 
+                        DisplayMemberPath="Description"
+                        x:Name="ZoneDescriptionCombo" 
+                        Height="30" 
+                        Margin="634,37,308,777"/>
 
                     <Button x:Name="NewEditButton"
                         Height="30" 
                         Margin="1016,177,26,637"  
-                        Content="Save"/>
+                        Content="Save" Click="NewEditButton_Click"/>
                     
                     <Button x:Name="DeleteButton"
                         Height="30" 
@@ -71,7 +91,8 @@
                         CanUserAddRows="False"
                         CanUserDeleteRows="False"
                         IsReadOnly="True"
-                        SelectedItem="{Binding SelectedProduct, UpdateSourceTrigger=PropertyChanged}">
+                        SelectedItem="{Binding SelectedProduct}"
+                        MouseDown="ProductDataGird_MouseDown">
                     </DataGrid>
                     <ComboBox ItemsSource="{Binding Path=ProductSearchTypes}"
                               DisplayMemberPath="SearchTypeDescription"

@@ -1,5 +1,4 @@
-﻿using System.Runtime.Serialization;
-
+﻿
 namespace RestApi.Models.Owner
 {
     public class OwnerModel
@@ -20,6 +19,17 @@ namespace RestApi.Models.Owner
                 Id = owner.Id,
                 Location = owner.Location,
                 Name = owner.Name
+            };
+        }
+
+        public Domain.Owner ToDomain()
+        {
+            return new Domain.Owner
+            {
+                Active = Active,
+                Id = Id,
+                Location = Location,
+                Name = Name
             };
         }
     }

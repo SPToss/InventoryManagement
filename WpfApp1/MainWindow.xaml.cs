@@ -1,5 +1,8 @@
 ﻿using InventoryManagement.ViewController;
 using Ninject;
+using RestApi.Client.Dto.Owner;
+using RestApi.Client.Dto.Product;
+using RestApi.Client.Dto.Response.Zone;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -77,17 +80,51 @@ namespace InventoryManagement
                 return;
             }
 
-            _mainWindowViewController.RemoveSelectedProduct();
-
+            if (MessageBox.Show("Are you sure you want to delete this ?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                _mainWindowViewController.RemoveSelectedProduct();
+                ClearProductEditSection();
+            };
         }
 
         private void NewButton_Click(object sender, RoutedEventArgs e)
         {
-            OwnerCombo.Items.Refresh();
+            OwnerCombo.SelectedItem = null;
+            StatusDescriptionCombo.SelectedItem = null;
+            ProductTypeCombo.SelectedItem = null;
+            ZoneDescriptionCombo.SelectedItem = null;
             ProductDescription.Clear();
-            ProductTypeCombo.Items.Refresh();
-            StatusDescriptionCombo.Items.Refresh();
-            ZoneDescriptionCombo.Items.Refresh();
+            _mainWindowViewController.NewProduct();
+        }
+
+        private void ProductDataGird_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            OwnerCombo.SelectedItem = _mainWindowViewController.AvailableOwners.First(x => x.Name == _mainWindowViewController.SelectedProduct.OwnerDescription);
+            StatusDescriptionCombo.SelectedItem = _mainWindowViewController.AvailableProductStatuses.First(x => x.Description == _mainWindowViewController.SelectedProduct.StatusDescription);
+            ProductTypeCombo.SelectedItem = _mainWindowViewController.AvailableProductTypes.First(x => x.Description == _mainWindowViewController.SelectedProduct.ProductType);
+            ZoneDescriptionCombo.SelectedItem = _mainWindowViewController.AvailableZones.First(x => x.Description == _mainWindowViewController.SelectedProduct.ZoneDescription);
+            ProductDescription.Text = _mainWindowViewController.SelectedProduct.ProductDescription;
+        }
+
+        private void NewEditButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(OwnerCombo.SelectedItem == null  || StatusDescriptionCombo.SelectedItem == null || ProductTypeCombo.SelectedItem == null || ZoneDescriptionCombo.SelectedItem == null || string.IsNullOrWhiteSpace(ProductDescription.Text))
+            {
+                MessageBox.Show("Please fill all fields", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            _mainWindowViewController.AddNewProduct((ProductTypeDto)ProductTypeCombo.SelectedItem, (OwnerDto) OwnerCombo.SelectedItem, (ProductStatusDto) StatusDescriptionCombo.SelectedItem, (ZoneDto) ZoneDescriptionCombo.SelectedItem, ProductDescription.Text);
+            ClearProductEditSection();
+        }
+
+        private void ClearProductEditSection()
+        {
+            OwnerCombo.SelectedItem = null;
+            StatusDescriptionCombo.SelectedItem = null;
+            ProductTypeCombo.SelectedItem = null;
+            ZoneDescriptionCombo.SelectedItem = null;
+            ProductDescription.Clear();
             _mainWindowViewController.NewProduct();
         }
     }

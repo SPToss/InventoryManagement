@@ -29,8 +29,39 @@ namespace RestApi.Controllers
         public ActionResult<List<ProductModel>> GetProductBySearchId([FromBody] GetProductBySearchTypeDto getProductBySearchTypeDto)
         {
             var results = _productService.GetProductsByCriteria(getProductBySearchTypeDto);
-            var t = results.Select(ProductModel.FormDomain);
-            return Ok(t);
+            return Ok(results.Select(ProductModel.FormDomain));
+        }
+
+        [HttpPost]
+        [ProducesResponseType(200, Type = typeof(List<ProductStatusModel>))]
+        public ActionResult<List<ProductStatusModel>> GetAllActiveProductStatuses()
+        {
+            var results = _productService.GetAllProductStatus();
+            return Ok(results.Select(ProductStatusModel.FormDto));
+        }
+
+        [HttpPost]
+        [ProducesResponseType(200, Type = typeof(List<ProductTypeModel>))]
+        public ActionResult<List<ProductTypeModel>> GetAllActiveProductTypes()
+        {
+            var results = _productService.GetAllProductTypes();
+            return Ok(results.Select(ProductTypeModel.FormDto));
+        }
+
+        [HttpPost]
+        [ProducesResponseType(200)]
+        public ActionResult InserOrUpdateModel([FromBody] ProductModel model)
+        {
+            _productService.InserOrUpdateProduct(model.ToDomain());
+            return Ok();
+        }
+
+        [HttpPost]
+        [ProducesResponseType(200)]
+        public ActionResult DeleteProduct([FromBody] DeleteProductRequestDto request)
+        {
+            _productService.DeleteProduct(request.ProductId);
+            return Ok();
         }
 
         protected override void InitializeController()
@@ -38,4 +69,4 @@ namespace RestApi.Controllers
             _productService = NinjectContainer.Container.Get<IProductService>();
         }
     }
-}
+} 

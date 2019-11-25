@@ -68,6 +68,7 @@ namespace InventoryManagement
             MainWindow mainWindow = NinjectContainer.Container.Get<MainWindow>();
             mainWindow.Owner = this.Owner;
             mainWindow.ShowDialog();
+            this.Close();
         }
     }
 }

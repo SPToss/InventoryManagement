@@ -14,6 +14,15 @@
                 $"WHERE PARENT_ZONE_ID IN ({zoneIds})";
         }
 
+        public static string GetAllActiveZones()
+        {
+            return $"SELECT DISTINCT " +
+                     "ID as Id," +
+                     "DESCRIPTION as Description," +
+                     "PARENT_ZONE_ID as ParentZoneId," +
+                     "ACTIVE as Active FROM ZONE WHERE ACTIVE = 1";
+        }
+
         private static string ZoneSelectSql()
         {
             return $"SELECT " +
