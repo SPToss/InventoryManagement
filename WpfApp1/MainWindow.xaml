@@ -78,6 +78,11 @@
                         Margin="1016,107,25,707"
                         Content="New" Click="NewButton_Click"/>
 
+                    <Button x:Name="GetQRButton"
+                        Height="30" 
+                        Margin="1015,72,26,742"
+                        Content="Get QR" Click="GetQRButton_Click"/>
+
                     <DataGrid  
                         ItemsSource="{Binding ProductViewModels, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"          
                         CanUserReorderColumns="True" 

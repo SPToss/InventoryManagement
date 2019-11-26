@@ -127,5 +127,20 @@ namespace InventoryManagement
             ProductDescription.Clear();
             _mainWindowViewController.NewProduct();
         }
+
+        private void GetQRButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (_mainWindowViewController.SelectedProduct == null)
+            {
+                MessageBox.Show("Select item first", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            var product = _mainWindowViewController.Products.First(x => x.Id == _mainWindowViewController.SelectedProduct.ProductId);
+
+            QRViewWindow window = new QRViewWindow(product);
+
+            window.ShowDialog();
+        }
     }
 }
