@@ -13,5 +13,11 @@
         public int ZoneId { get; set; }
 
         public string Salt { get; set; }
+
+        public string Hash { get; set; }
+
+        public int IsAdmin { get; set; }
+
+        public int Active { get; set; }
     }
 }

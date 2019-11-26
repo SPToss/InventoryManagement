@@ -21,16 +21,50 @@ namespace DataAccess.Sql.User
                         )";
         }
 
-        public static string GetUserInformation(UserCredential userCredential)
+        public static string GetUserInformation(UserCredential userCredential) 
         {
             return $@"SELECT  ID as UserId,
                               NAME as Name,
                               LAST_NAME as LastName,
                               ZONE_ID as ZoneId,
-                              LOGIN as Login
+                              LOGIN as Login,
+                              IS_ADMIN as IsAdmin,
+                              ACTIVE as Active
                      FROM USER
                      WHERE LOGIN = '{userCredential.Login}'
-                     AND HASH = '{userCredential.Hash}'";
+                     AND HASH = '{userCredential.Hash}'
+                     AND ACTIVE =  1";
+        }
+
+        public static string GetAllActiveUsers()
+        {
+            return $@"SELECT  ID as UserId,
+                              NAME as Name,
+                              LAST_NAME as LastName,
+                              ZONE_ID as ZoneId,
+                              LOGIN as Login,
+                              IS_ADMIN as IsAdmin,
+                              ACTIVE as Active
+                     FROM USER WHERE ACTIVE = 1";
+        }
+
+        public static string UpdateUser(UserDto user)
+        {
+            var userString = $@"UPDATE USER SET NAME = '{user.Name}', LAST_NAME = '{user.LastName}' , ZONE_ID = {user.ZoneId}, LOGIN = '{user.Login}', IS_ADMIN = {user.IsAdmin}, ACTIVE = {user.Active}";
+
+            if (user.Hash != null)
+            {
+                userString += $@" ,HASH = '{user.Hash}', SALT = '{user.Salt}'";
+            }
+
+            userString += $@" WHERE ID = {user.UserId};";
+
+            return userString;
+        }
+
+        public static string InsertUser(UserDto user)
+        {
+            return $@"INSERT INTO USER (ID, NAME, LAST_NAME, ZONE_ID, LOGIN, HASH, SALT, IS_ADMIN, ACTIVE) VALUES (NULL, '{user.Name}', '{user.LastName}', {user.ZoneId}, '{user.Login}', '{user.Hash}', '{user.Salt}', '{user.IsAdmin}', '{user.Active}')";
         }
 
         public static string GetUserHistoryEvents()

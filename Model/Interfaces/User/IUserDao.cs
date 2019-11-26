@@ -12,5 +12,11 @@ namespace DataAccess.Interfaces.User
         IEnumerable<UserHistoryTypeDto> GetAllActiveUserHistoryTypes();
 
         string GetSaltForUser(string login);
+
+        IEnumerable<UserDto> GetAllActiveUsers();
+
+        void UpdateUser(UserDto user);
+
+        void InsertUser(UserDto user);
     }
 }

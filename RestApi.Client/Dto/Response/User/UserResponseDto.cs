@@ -12,6 +12,8 @@
 
         public int ZoneId { get; set; }
 
-        public string Salt { get; set; }
+        public bool IsAdmin { get; set; }
+
+        public bool Active { get; set; }
     }
 } 

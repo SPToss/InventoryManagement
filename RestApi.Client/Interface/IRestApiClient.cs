@@ -15,6 +15,9 @@ namespace RestApi.Client.Interface
 
         UserResponseDto Authorize(UserAuthorizeRequestDto userAuthorizeRequestDto);
 
+        List<UserResponseDto> GetAllActiveUsers();
+
+        void UpdateUser(UserUpdateRequest request);
         #endregion User
 
         #region Product

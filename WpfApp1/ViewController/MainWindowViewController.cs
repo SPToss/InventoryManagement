@@ -21,7 +21,7 @@ namespace InventoryManagement.ViewController
             _restApiClient = restApiClient;
             Initialize();
             ProductViewModels.CollectionChanged += ProductsCollectionChanged;
-
+            AllActiveUsers.CollectionChanged += UsersCollectionChanged;
         }
 
         #region Event declaration
@@ -34,6 +34,11 @@ namespace InventoryManagement.ViewController
 
         public bool CanModifyUserData => true;
         public ObservableCollection<ProductViewModel> ProductViewModels { get; set; } = new ObservableCollection<ProductViewModel>();
+
+        public ObservableCollection<UserResponseDto> AllActiveUsers { get; set; } = new ObservableCollection<UserResponseDto>();
+
+        public UserResponseDto SelectedUser { get; set; }
+
         public List<ProductSearchTypeDto> ProductSearchTypes { get; set; } = new List<ProductSearchTypeDto>();
         public int SelectedSearchId { get; set; }
 
@@ -55,7 +60,7 @@ namespace InventoryManagement.ViewController
 
         public void FillProductList()
         {
-            if(SelectedSearchId == 0)
+            if (SelectedSearchId == 0)
             {
                 return;
             }
@@ -79,10 +84,10 @@ namespace InventoryManagement.ViewController
                     break;
             }
 
-            Products =  _restApiClient.GetProductBySearchId(requestDto);
+            Products = _restApiClient.GetProductBySearchId(requestDto);
             var porductsModels = Products.Select(ProductViewModel.FromRest);
 
-            foreach(var model in porductsModels)
+            foreach (var model in porductsModels)
             {
                 ProductViewModels.Add(model);
             }
@@ -93,7 +98,7 @@ namespace InventoryManagement.ViewController
         {
             var productToRemove = ProductViewModels.First(x => x.ProductId == SelectedProduct.ProductId);
 
-            if(productToRemove == null)
+            if (productToRemove == null)
             {
                 return;
             }
@@ -108,7 +113,7 @@ namespace InventoryManagement.ViewController
             SelectedProduct = null;
         }
 
-        public void AddNewProduct(ProductTypeDto type, OwnerDto owner, ProductStatusDto status, ZoneDto zone, string description )
+        public void AddNewProduct(ProductTypeDto type, OwnerDto owner, ProductStatusDto status, ZoneDto zone, string description)
         {
             ProductDto productDto = new ProductDto
             {
@@ -123,6 +128,39 @@ namespace InventoryManagement.ViewController
             SaveOrUpdateProduct(productDto);
         }
 
+        public void DeactivateCurrentUser()
+        {
+            SelectedUser.Active = false;
+
+            _restApiClient.UpdateUser(new RestApi.Client.Dto.Request.User.UserUpdateRequest
+            {
+                User = SelectedUser
+            });
+
+            RefreshUsers();
+        }
+
+        public void SaveUser(string name, string lastName, string login, string passwd, int zoneId, bool isActive, bool isAdmin)
+        {
+            _restApiClient.UpdateUser(new RestApi.Client.Dto.Request.User.UserUpdateRequest
+            {
+                User = new UserResponseDto
+                {
+                    Active = isActive,
+                    IsAdmin = isAdmin,
+                    LastName = lastName,
+                    Login = login,
+                    Name = name,
+                    UserId = SelectedUser?.UserId ?? 0,
+                    ZoneId = zoneId
+                },
+                Param = passwd
+            });
+
+            RefreshUsers();
+        }
+
+        
         #endregion Public methods
 
         #region Private methods
@@ -135,6 +173,14 @@ namespace InventoryManagement.ViewController
             }
         }
 
+        private void UsersCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs("AllActiveUsers"));
+            }
+        }
+
         private void Initialize()
         {
             ProductSearchTypes = _restApiClient.GetAllProductSearchTypes();
@@ -142,11 +188,21 @@ namespace InventoryManagement.ViewController
             AvailableProductStatuses = _restApiClient.GetAllProductStatuses();
             AvailableProductTypes = _restApiClient.GetAllProductTypes();
             AvailableZones = _restApiClient.GetAllZones();
+            if (UserContext.CanAddUser())
+            {
+                var allActiveUsers = _restApiClient.GetAllActiveUsers();
+
+                foreach (var user in allActiveUsers)
+                {
+                    AllActiveUsers.Add(user);
+                }
+            }
+
         }
 
         private void SaveOrUpdateProduct(ProductDto product)
         {
-            if(product == null)
+            if (product == null)
             {
                 return;
             }
@@ -163,6 +219,19 @@ namespace InventoryManagement.ViewController
             FillProductList();
 
             SelectedProduct = null;
+        }
+
+        private void RefreshUsers()
+        {
+            AllActiveUsers.Clear();
+            var allActiveUsers = _restApiClient.GetAllActiveUsers();
+
+            foreach (var user in allActiveUsers)
+            {
+                AllActiveUsers.Add(user);
+            }
+
+            SelectedUser = null;
         }
 
         #endregion Private methods

@@ -28,68 +28,72 @@
             </TabControl.Resources>
             <TabItem Header="Product" Width="50" Height="75" x:Name="ProductTab">
                 <Grid>
-                    <Label Content="Owner" Margin="853,37,189,777" x:Name="OwnerLabel" Width="100" Height="30"/>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="47*"/>
+                        <RowDefinition Height="164*"/>
+                    </Grid.RowDefinitions>
+                    <Label Content="Owner" Margin="853,37,189,121" x:Name="OwnerLabel" Width="100" Height="30"/>
                     <ComboBox 
                         ItemsSource="{Binding Path=AvailableOwners}" 
                         DisplayMemberPath="Name"
                         x:Name="OwnerCombo" 
                         Height="30" 
-                        Margin="916,37,26,777"/>
+                        Margin="916,37,26,121"/>
 
-                    <Label Content="Product Description" Margin="24,72,983,742" x:Name="ProductDescriptionLabel" Height="30"/>
-                    <TextBox x:Name="ProductDescription" Margin="24,107,131,637"/>
+                    <Label Content="Product Description" Margin="24,72,983,86" x:Name="ProductDescriptionLabel" Height="30"/>
+                    <TextBox x:Name="ProductDescription" Margin="24,107,131,637" Grid.RowSpan="2"/>
 
-                    <Label Content="Product Type" Margin="24,37,1018,777" x:Name="ProductTypeLabel" Width="100" Height="30"/>
+                    <Label Content="Product Type" Margin="24,37,1018,121" x:Name="ProductTypeLabel" Width="100" Height="30"/>
                     <ComboBox 
                         ItemsSource="{Binding Path=AvailableProductTypes}" 
                         DisplayMemberPath="Description"
                         x:Name="ProductTypeCombo" 
                         Height="30" 
-                        Margin="115,37,827,777"/>
+                        Margin="115,37,827,121"/>
 
-                    <Label Content="Satus" Margin="316,37,726,777" x:Name="StatusDescriptionLabel" Width="100" Height="30"/>
+                    <Label Content="Satus" Margin="316,37,726,121" x:Name="StatusDescriptionLabel" Width="100" Height="30"/>
                     <ComboBox 
                         ItemsSource="{Binding Path=AvailableProductStatuses}" 
                         DisplayMemberPath="Description"
                         x:Name="StatusDescriptionCombo" 
                         Height="30" 
-                        Margin="360,37,582,777"/>
+                        Margin="360,37,582,121"/>
 
-                    <Label Content="Zone" Margin="581,37,447,777" x:Name="ZoneDescriptionLabel" Height="30"/>
+                    <Label Content="Zone" Margin="581,37,447,121" x:Name="ZoneDescriptionLabel" Height="30"/>
                     <ComboBox 
                         ItemsSource="{Binding Path=AvailableZones}" 
                         DisplayMemberPath="Description"
                         x:Name="ZoneDescriptionCombo" 
                         Height="30" 
-                        Margin="634,37,308,777"/>
+                        Margin="634,37,308,121"/>
 
                     <Button x:Name="NewEditButton"
                         Height="30" 
                         Margin="1016,177,26,637"  
-                        Content="Save" Click="NewEditButton_Click"/>
-                    
+                        Content="Save" Click="NewEditButton_Click" Grid.RowSpan="2"/>
+
                     <Button x:Name="DeleteButton"
                         Height="30" 
-                        Margin="1016,142,25,672"
+                        Margin="1016,142,25,16"
                         Content="Delete" Click="DeleteButton_Click"/>
 
                     <Button x:Name="NewButton"
                         Height="30" 
-                        Margin="1016,107,25,707"
+                        Margin="1016,107,25,51"
                         Content="New" Click="NewButton_Click"/>
 
                     <Button x:Name="GetQRButton"
                         Height="30" 
-                        Margin="1015,72,26,742"
+                        Margin="1015,72,26,86"
                         Content="Get QR" Click="GetQRButton_Click"/>
-
+                    
                     <DataGrid  
                         ItemsSource="{Binding ProductViewModels, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"          
                         CanUserReorderColumns="True" 
                         CanUserResizeColumns="True" 
                         CanUserResizeRows="False" 
                         CanUserSortColumns="True"  
-                        Margin="25,250,25,40"
+                        Margin="25,62,25,40"
                         AutoGenerateColumns="True"
                         ColumnWidth="*"
                         x:Name="ProductDataGird"
@@ -97,28 +101,86 @@
                         CanUserDeleteRows="False"
                         IsReadOnly="True"
                         SelectedItem="{Binding SelectedProduct}"
-                        MouseDown="ProductDataGird_MouseDown">
+                        MouseDown="ProductDataGird_MouseDown" Grid.Row="1">
                     </DataGrid>
+
                     <ComboBox ItemsSource="{Binding Path=ProductSearchTypes}"
                               DisplayMemberPath="SearchTypeDescription"
                               SelectedValuePath="SearchTypeId"
                               SelectedValue="{Binding Path=SelectedSearchId}"
                               x:Name="ProductSearchOption" 
                               Height="30" 
-                              Margin="24,215,131,599"
+                              Margin="24,27,131,599"
                               SelectedIndex="0"
-                              IsSynchronizedWithCurrentItem="True"/>
+                              IsSynchronizedWithCurrentItem="True" Grid.Row="1"/>
                     <Button x:Name="ProductSearch"
                             Height="30" 
-                            Margin="1016,215,25,599" 
-                            Content="Search" Click="ProductSearch_Click"/>
+                            Margin="1016,27,25,599" 
+                            Content="Search" Click="ProductSearch_Click" Grid.Row="1"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Inventory" Width="50" Height="75" x:Name="InventoryTab">
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
             <TabItem Header="User" Width="50" Height="75" x:Name="UserTab">
-                <Grid Background="#FFE5E5E5"/>
+                <Grid>
+
+                    <Label Content="Name" Margin="37,13,1026,801" x:Name="UserNameLabel" Height="30"/>
+                    <TextBox x:Name="UserNameTextBox" Margin="99,13,836,801"/>
+
+                    <Label Content="Last Name" Margin="320,10,743,804" x:Name="UserLastNameLabel" Height="30"/>
+                    <TextBox x:Name="UserLastNameTextBox" Margin="399,10,505,804"/>
+                    
+                    <Label Content="Login" Margin="670,10,393,804" x:Name="UserLoginLabel" Height="30"/>
+                    <TextBox x:Name="UserLoginTextBox" Margin="732,10,164,804"/>
+                    
+                    <Label Content="Password" Margin="37,71,1026,743" x:Name="UserNameLabel_Copy2" Height="30"/>
+                    <PasswordBox x:Name="UserPassword" Margin="99,71,836,743" PasswordChar="*"/>
+
+                    <Label Content="Zone" Margin="337,71,720,743" x:Name="UserZoneLabel" Height="30"/>
+                    <ComboBox 
+                        ItemsSource="{Binding Path=AvailableZones}" 
+                        DisplayMemberPath="Description"
+                        x:Name="UserZoneCombo" 
+                        Height="30" 
+                        Margin="399,71,505,743"/>
+
+                    <CheckBox x:Name="IsAdminCheckBox" Margin="818,72,164,741">IsAdmin</CheckBox>
+
+                    <CheckBox x:Name="ActiveCheckBox" Margin="670,72,372,742">Active</CheckBox>
+
+                    <Button x:Name="NewUserButton"
+                        Height="30" 
+                        Margin="1002,8,25,806"
+                        Content="New" Click="NewUserButton_Click" />
+
+                    <Button x:Name="DeleteUserButton"
+                        Height="30" 
+                        Margin="1002,52,25,762"
+                        Content="Delete" Click="DeleteUserButton_Click" />
+                    
+                    <Button x:Name="SaveUserButton"
+                        Height="30" 
+                        Margin="1002,98,25,716"
+                        Content="Save" Click="SaveUserButton_Click" />
+
+                    <DataGrid  
+                        ItemsSource="{Binding AllActiveUsers, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"          
+                        CanUserReorderColumns="True" 
+                        CanUserResizeColumns="True" 
+                        CanUserResizeRows="False" 
+                        CanUserSortColumns="True"  
+                        Margin="25,150,25,40"
+                        AutoGenerateColumns="True"
+                        ColumnWidth="*"
+                        x:Name="UserDataGrid"
+                        CanUserAddRows="False"
+                        CanUserDeleteRows="False"
+                        IsReadOnly="True"
+                        SelectedItem="{Binding SelectedUser}"
+                        MouseDown="UserDataGrid_MouseDown">
+                    </DataGrid>
+                </Grid>
             </TabItem>
         </TabControl>
     </Grid>

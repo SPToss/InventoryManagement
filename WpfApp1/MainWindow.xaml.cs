@@ -3,6 +3,7 @@ using Ninject;
 using RestApi.Client.Dto.Owner;
 using RestApi.Client.Dto.Product;
 using RestApi.Client.Dto.Response.Zone;
+using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -55,7 +56,7 @@ namespace InventoryManagement
 
             if (_mainWindowViewController.CanModifyUserData)
             {
-                UserTab.Visibility = Visibility.Visible;
+                UserTab.Visibility = UserContext.CanAddUser() ? Visibility.Visible : Visibility.Hidden;
             }
         }
 
@@ -99,6 +100,11 @@ namespace InventoryManagement
 
         private void ProductDataGird_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
+            if(_mainWindowViewController.SelectedProduct == null)
+            {
+                return;
+            }
+
             OwnerCombo.SelectedItem = _mainWindowViewController.AvailableOwners.First(x => x.Name == _mainWindowViewController.SelectedProduct.OwnerDescription);
             StatusDescriptionCombo.SelectedItem = _mainWindowViewController.AvailableProductStatuses.First(x => x.Description == _mainWindowViewController.SelectedProduct.StatusDescription);
             ProductTypeCombo.SelectedItem = _mainWindowViewController.AvailableProductTypes.First(x => x.Description == _mainWindowViewController.SelectedProduct.ProductType);
@@ -141,6 +147,75 @@ namespace InventoryManagement
             QRViewWindow window = new QRViewWindow(product);
 
             window.ShowDialog();
+        }
+
+        private void UserDataGrid_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if(_mainWindowViewController.SelectedUser == null)
+            {
+                return;
+            }
+            UserZoneCombo.SelectedItem = _mainWindowViewController.AvailableZones.First(x => x.Id == _mainWindowViewController.SelectedUser.ZoneId);
+            UserNameTextBox.Text = _mainWindowViewController.SelectedUser.Name;
+            UserLastNameTextBox.Text = _mainWindowViewController.SelectedUser.LastName;
+            UserLoginTextBox.Text = _mainWindowViewController.SelectedUser.Login;
+            IsAdminCheckBox.IsChecked = _mainWindowViewController.SelectedUser.IsAdmin;
+            ActiveCheckBox.IsChecked = _mainWindowViewController.SelectedUser.Active;
+        }
+
+        private void NewUserButton_Click(object sender, RoutedEventArgs e)
+        {
+            UserNameTextBox.Clear();
+            UserLastNameTextBox.Clear();
+            UserLoginTextBox.Clear();
+            UserPassword.Clear();
+            UserZoneCombo.SelectedItem = null;
+            IsAdminCheckBox.IsChecked = false;
+            ActiveCheckBox.IsChecked = false;
+            _mainWindowViewController.SelectedUser = null;
+        }
+
+        private void DeleteUserButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (_mainWindowViewController.SelectedUser == null)
+            {
+                MessageBox.Show("Cannot remove item. Please select one first", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (MessageBox.Show("Are you sure you want to deactivate this ?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                _mainWindowViewController.DeactivateCurrentUser();
+                ClearProductEditSection();
+            };
+        }
+
+        private void SaveUserButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(_mainWindowViewController.SelectedUser != null)
+            {
+                if (!string.IsNullOrWhiteSpace(UserPassword.Password) && MessageBox.Show("Are you sure that you want to change password ?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
+                {
+                    return;
+                }
+            }
+            else
+            {
+                if(UserPassword.Password == null)
+                {
+                    MessageBox.Show("Password need to be set while creating new user", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+            }
+            try
+            {
+                _mainWindowViewController.SaveUser(UserNameTextBox.Text, UserLastNameTextBox.Text, UserLoginTextBox.Text, UserPassword.Password, (UserZoneCombo.SelectedItem as ZoneDto).Id, ActiveCheckBox.IsChecked.Value, IsAdminCheckBox.IsChecked.Value);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Unable  to finish operation because of exception. Make sure that you entered correct data", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
     }
 }

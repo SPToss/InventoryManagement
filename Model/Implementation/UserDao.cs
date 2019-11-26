@@ -18,14 +18,29 @@ namespace DataAccess.Implementation
             return QuerryForList<UserHistoryTypeDto>(UserSql.GetUserHistoryEvents());
         }
 
+        public IEnumerable<UserDto> GetAllActiveUsers()
+        {
+            return QuerryForList<UserDto>(UserSql.GetAllActiveUsers());
+        }
+
         public string GetSaltForUser(string login)
         {
             return QueryForObject<string>(UserSql.GetSaltForUser(login));
         }
 
+        public void InsertUser(UserDto user)
+        {
+            NonResultQuerry(UserSql.InsertUser(user));
+        }
+
         public void SaveUserHistoryEvent(UserHistoryDto userHistoryDto)
         {
             NonResultQuerry(UserSql.InserUserHistoryEventSql(userHistoryDto));
+        }
+
+        public void UpdateUser(UserDto user)
+        {
+            NonResultQuerry(UserSql.UpdateUser(user));
         }
     }
 }

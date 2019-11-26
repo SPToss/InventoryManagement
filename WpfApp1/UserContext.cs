@@ -23,5 +23,7 @@ namespace InventoryManagement
         }
 
         public static int GetUserZoneId() => _user.ZoneId;
+
+        public static bool CanAddUser() => _user.IsAdmin;
     }
 }

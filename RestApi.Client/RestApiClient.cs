@@ -23,6 +23,15 @@ namespace RestApi.Client
             return CallRestApiWithPost<UserResponseDto, UserAuthorizeRequestDto>("/User/Authorize/", userAuthorizeRequestDto);
         }
 
+        public List<UserResponseDto> GetAllActiveUsers()
+        {
+            return CallRestApiWithPost<List<UserResponseDto>>("/User/GetAllActiveUsers/");
+        }
+        public void UpdateUser(UserUpdateRequest request)
+        {
+            CallRestApiWithPost("/User/UpdateUser/", request);
+        }
+
         #endregion User
 
         #region Product

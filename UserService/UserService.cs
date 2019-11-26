@@ -1,6 +1,8 @@
 ﻿using DataAccess.Interfaces.User;
 using DataTransfer.User;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UserService.Interface;
 
 namespace UserService
@@ -80,6 +82,65 @@ namespace UserService
             }
 
             return user;
+        }
+
+        public IEnumerable<User> GetAllActiveUsers()
+        {
+            var usersDto = _userDao.GetAllActiveUsers();
+
+            return usersDto.Select(User.FromDto);
+        }
+
+        public void UpdateUser(User user)
+        {
+            if(user.UserId == 0)
+            {
+                InsertNewUser(user);
+            }
+            else
+            {
+                UpdateExistingUser(user);
+            }
+        }
+
+        private void UpdateExistingUser(User user)
+        {
+            var userDto = user.ToDto();
+
+            if (!string.IsNullOrWhiteSpace(user.NewPaswd))
+            {
+                (string hash, string salt) hash = _hashService.HashString(user.NewPaswd);
+                userDto.Hash = hash.hash;
+                userDto.Salt = hash.salt;
+            }
+
+            _userDao.UpdateUser(userDto);
+
+            _userDao.SaveUserHistoryEvent(new UserHistoryDto
+            {
+                Description = "User was updated",
+                EventDate = DateTime.Now,
+                UserHistoryTypeId = 4,
+                UserId = userDto.UserId
+            });
+        }
+
+        private void InsertNewUser(User user)
+        {
+            var userDto = user.ToDto();
+            (string hash, string salt) hash = _hashService.HashString(user.NewPaswd);
+            userDto.Hash = hash.hash;
+            userDto.Salt = hash.salt;
+
+            _userDao.InsertUser(userDto);
+
+            _userDao.SaveUserHistoryEvent(new UserHistoryDto
+            {
+                Description = $"User {userDto.Login} was added",
+                EventDate = DateTime.Now,
+                UserHistoryTypeId = 5,
+                UserId = null
+            });
         }
     }
 }
