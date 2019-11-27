@@ -13,5 +13,7 @@ namespace DataTransfer.Inventory
         public DateTime ScannedDate { get; set; }
 
         public int ProductId { get; set; }
+
+
     }
 }

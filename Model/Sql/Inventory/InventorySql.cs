@@ -4,9 +4,16 @@ namespace DataAccess.Sql.Inventory
 {
     public static class InventorySql
     {
-        public static string GetAllActiveInventories()
+        public static string GetAllInventoriesByStatus(int? stausId)
         {
-            return $"{InventorySelectSql()} WHERE STATUS_ID IN (1, 2) ";
+            var sql =  $"{InventorySelectSql()}";
+
+            if (stausId.HasValue)
+            {
+                sql += $" WHERE STATUS_ID = {stausId.Value} ";
+            }
+
+            return sql;
         }
 
         public static string GetInventoryById(int inventoryId)
@@ -68,6 +75,11 @@ namespace DataAccess.Sql.Inventory
                  $"{inventoryEvent.EventType})";
         }
 
+        public static string GetAllActiveInventorySearches()
+        {
+            return "SELECT ID as SearchTypeId, DESCRIPTION as SearchTypeDescription FROM INVENTORY_SEARCH_TYPE WHERE ACTIVE = 1";
+        }
+
         private static string GetInventoryProductSql()
         {
             return "SELECT ID as Id," +
@@ -83,7 +95,8 @@ namespace DataAccess.Sql.Inventory
                     "START_DATE as StartDate," +
                     "END_DATE as EndDate," +
                     "DESCRIPTION as Description," +
-                    "STATUS_ID as StatusId " +
+                    "STATUS_ID as StatusId, " +
+                    "ZONE_ID as ZoneId "+
                     "FROM INVENTORY ";
         }
     }

@@ -5,7 +5,7 @@ namespace DataAccess.Interfaces.Inventory
 {
     public interface IInventoryDao
     {
-        IEnumerable<InventoryDto> GetActiveInventories();
+        IEnumerable<InventoryDto> GetAllInventoriesByStatus(int? statusId);
 
         InventoryDto GetInventoryById(int inventoryId);
 
@@ -18,5 +18,7 @@ namespace DataAccess.Interfaces.Inventory
         void AddInventoryProduct(InventoryProductDto inventoryProduct);
 
         void AddInventoryEvent(InventoryEventDto inventoryEvent);
+
+        IEnumerable<InventorySearchDto> GetAllActiveInventorySearch();
     }
 }

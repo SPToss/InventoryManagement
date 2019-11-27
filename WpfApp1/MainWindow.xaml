@@ -86,7 +86,7 @@
                         Height="30" 
                         Margin="1015,72,26,86"
                         Content="Get QR" Click="GetQRButton_Click"/>
-                    
+
                     <DataGrid  
                         ItemsSource="{Binding ProductViewModels, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"          
                         CanUserReorderColumns="True" 
@@ -120,7 +120,72 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Inventory" Width="50" Height="75" x:Name="InventoryTab">
-                <Grid Background="#FFE5E5E5"/>
+                <Grid>
+                    <ComboBox 
+                        ItemsSource="{Binding Path=AvailableProductStatuses}" 
+                        DisplayMemberPath="Description"
+                        x:Name="InventorySearchCombo" 
+                        Height="30" 
+                        Margin="25,10,140,804"/>
+
+                    <Button x:Name="SearchInventoryButton"
+                        Height="30" 
+                        Margin="1016,10,25,804"
+                        Content="Search" Click="GetQRButton_Click"/>
+
+                    <DataGrid  
+                        ItemsSource="{Binding ProductViewModels, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"          
+                        CanUserReorderColumns="True" 
+                        CanUserResizeColumns="True" 
+                        CanUserResizeRows="False" 
+                        CanUserSortColumns="True"  
+                        Margin="25,45,140,629"
+                        AutoGenerateColumns="True"
+                        ColumnWidth="*"
+                        x:Name="InventoryDataGrid"
+                        CanUserAddRows="False"
+                        CanUserDeleteRows="False"
+                        IsReadOnly="True"
+                        SelectedItem="{Binding SelectedProduct}"
+                        MouseDown="ProductDataGird_MouseDown"/>
+                    
+                    <DataGrid  
+                        ItemsSource="{Binding ProductViewModels, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"          
+                        CanUserReorderColumns="True" 
+                        CanUserResizeColumns="True" 
+                        CanUserResizeRows="False" 
+                        CanUserSortColumns="True"  
+                        Margin="25,232,25,39"
+                        AutoGenerateColumns="True"
+                        ColumnWidth="*"
+                        x:Name="InventoryProductsDataGrid"
+                        CanUserAddRows="False"
+                        CanUserDeleteRows="False"
+                        IsReadOnly="True"
+                        SelectedItem="{Binding SelectedProduct}"
+                        MouseDown="ProductDataGird_MouseDown"/>
+                    
+                    <Button x:Name="SearchInventoryButton_Copy"
+                        Height="30" 
+                        Margin="1016,45,25,769"
+                        Content="New" Click="GetQRButton_Click"/>
+                    <Button x:Name="SearchInventoryButton_Copy1"
+                        Height="30" 
+                        Margin="1016,80,25,734"
+                        Content="Activate" Click="GetQRButton_Click"/>
+                    <Button x:Name="SearchInventoryButton_Copy2"
+                        Height="30" 
+                        Margin="1016,115,25,699"
+                        Content="Finish" Click="GetQRButton_Click"/>
+                    <Button x:Name="SearchInventoryButton_Copy3"
+                        Height="30" 
+                        Margin="1016,150,25,664"
+                        Content="Abandon" Click="GetQRButton_Click"/>
+                    <Button x:Name="SearchInventoryButton_Copy4"
+                        Height="30" 
+                        Margin="1016,185,25,629"
+                        Content="Raprot" Click="GetQRButton_Click"/>
+                </Grid>
             </TabItem>
             <TabItem Header="User" Width="50" Height="75" x:Name="UserTab">
                 <Grid>
@@ -130,10 +195,10 @@
 
                     <Label Content="Last Name" Margin="320,10,743,804" x:Name="UserLastNameLabel" Height="30"/>
                     <TextBox x:Name="UserLastNameTextBox" Margin="399,10,505,804"/>
-                    
+
                     <Label Content="Login" Margin="670,10,393,804" x:Name="UserLoginLabel" Height="30"/>
                     <TextBox x:Name="UserLoginTextBox" Margin="732,10,164,804"/>
-                    
+
                     <Label Content="Password" Margin="37,71,1026,743" x:Name="UserNameLabel_Copy2" Height="30"/>
                     <PasswordBox x:Name="UserPassword" Margin="99,71,836,743" PasswordChar="*"/>
 
@@ -158,7 +223,7 @@
                         Height="30" 
                         Margin="1002,52,25,762"
                         Content="Delete" Click="DeleteUserButton_Click" />
-                    
+
                     <Button x:Name="SaveUserButton"
                         Height="30" 
                         Margin="1002,98,25,716"

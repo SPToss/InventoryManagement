@@ -1,10 +1,13 @@
 ﻿using DataAccess.Interfaces.Inventory;
 using DataAccess.Interfaces.Product;
+using DataTransfer.Api.Request.Inventory;
 using DataTransfer.Inventory;
 using Domain;
 using Domain.Types;
 using Service.Interface;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Service
 {
@@ -81,6 +84,49 @@ namespace Service
             }
         }
 
-        
+        public IEnumerable<InventorySearchDto> GetAllInventorySerarches()
+        {
+            return _inventoryDao.GetAllActiveInventorySearch();
+        }
+
+        public IEnumerable<Inventory> GetInventoryBySearch(GetInventoryBySearch getInventoryBySearch)
+        {
+            int? statusId = null;
+
+            switch (getInventoryBySearch.SearchId)
+            {
+                case 1:
+                    statusId = null;
+                    break;
+                case 2:
+                    statusId = 2;
+                    break;
+                case 3:
+                    statusId = 3;
+                    break;
+                case 4:
+                    statusId = 1;
+                    break;
+                case 5:
+                    statusId = 4;
+                    break;
+                default:
+                    statusId = null;
+                    break;
+            }
+
+            var inventorysDto = _inventoryDao.GetAllInventoriesByStatus(statusId);
+
+            var inventorys = inventorysDto.Select(Inventory.FromDto);
+
+            foreach(var inventory in inventorys)
+            {
+                var products = _inventoryDao.GetAllInventoryProductsByInventoryId(inventory.Id).Select(InventoryProduct.FormDto);
+
+                inventory.Products = products.ToList() ;
+            }
+
+            return inventorys;
+        }
     }
 }

@@ -13,5 +13,7 @@ namespace DataTransfer.Inventory
         public string Description { get; set; }
 
         public int StatusId { get; set; }
+
+        public int ZoneId { get; set; }
     }
 }

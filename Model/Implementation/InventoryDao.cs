@@ -18,9 +18,14 @@ namespace DataAccess.Implementation
             NonResultQuerry(InventorySql.AddInventoryProduct(inventoryProduct));
         }
 
-        public IEnumerable<InventoryDto> GetActiveInventories()
+        public IEnumerable<InventorySearchDto> GetAllActiveInventorySearch()
         {
-            return QuerryForList<InventoryDto>(InventorySql.GetAllActiveInventories());
+            return QuerryForList<InventorySearchDto>(InventorySql.GetAllActiveInventorySearches());
+        }
+
+        public IEnumerable<InventoryDto> GetAllInventoriesByStatus(int? statusId)
+        {
+            return QuerryForList<InventoryDto>(InventorySql.GetAllInventoriesByStatus(statusId));
         }
 
         public IEnumerable<InventoryProductDto> GetAllInventoryProductsByInventoryId(int inventoryId)

@@ -2,6 +2,7 @@
 using DataTransfer.InventoryStatus;
 using Domain.Types;
 using System;
+using System.Collections.Generic;
 
 namespace Domain
 {
@@ -15,6 +16,10 @@ namespace Domain
 
         public string Description { get; set; }
 
+        public int ZoneId { get; set; }
+        
+        public List<InventoryProduct> Products { get; set; }
+
         public InventoryStatusDto InventorySatus { get; set; }
 
         public static Inventory FromDto(InventoryDto dto)
@@ -25,7 +30,8 @@ namespace Domain
                 EndDate = dto.EndDate,
                 StartDate = dto.StartDate,
                 Id = dto.Id,
-                InventorySatus = new InventoryStatus().GetById(dto.StatusId)
+                InventorySatus = new InventoryStatus().GetById(dto.StatusId),
+                ZoneId = dto.ZoneId
             };
         }
 
@@ -37,7 +43,8 @@ namespace Domain
                 EndDate = EndDate,
                 StartDate = StartDate,
                 Id = Id,
-                StatusId = InventorySatus.Id
+                StatusId = InventorySatus.Id,
+                ZoneId = ZoneId
             };
         }
     }
