@@ -62,7 +62,7 @@ namespace InventoryManagement
 
         private void ProductSearch_Click(object sender, RoutedEventArgs e)
         {
-            if(_mainWindowViewController.SelectedSearchId == 0)
+            if (_mainWindowViewController.SelectedSearchId == 0)
             {
                 MessageBox.Show("Search must be selected.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
@@ -75,7 +75,7 @@ namespace InventoryManagement
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            if(_mainWindowViewController.SelectedProduct == null)
+            if (_mainWindowViewController.SelectedProduct == null)
             {
                 MessageBox.Show("Cannot remove item. Please select one first", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
@@ -98,29 +98,15 @@ namespace InventoryManagement
             _mainWindowViewController.NewProduct();
         }
 
-        private void ProductDataGird_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            if(_mainWindowViewController.SelectedProduct == null)
-            {
-                return;
-            }
-
-            OwnerCombo.SelectedItem = _mainWindowViewController.AvailableOwners.First(x => x.Name == _mainWindowViewController.SelectedProduct.OwnerDescription);
-            StatusDescriptionCombo.SelectedItem = _mainWindowViewController.AvailableProductStatuses.First(x => x.Description == _mainWindowViewController.SelectedProduct.StatusDescription);
-            ProductTypeCombo.SelectedItem = _mainWindowViewController.AvailableProductTypes.First(x => x.Description == _mainWindowViewController.SelectedProduct.ProductType);
-            ZoneDescriptionCombo.SelectedItem = _mainWindowViewController.AvailableZones.First(x => x.Description == _mainWindowViewController.SelectedProduct.ZoneDescription);
-            ProductDescription.Text = _mainWindowViewController.SelectedProduct.ProductDescription;
-        }
-
         private void NewEditButton_Click(object sender, RoutedEventArgs e)
         {
-            if(OwnerCombo.SelectedItem == null  || StatusDescriptionCombo.SelectedItem == null || ProductTypeCombo.SelectedItem == null || ZoneDescriptionCombo.SelectedItem == null || string.IsNullOrWhiteSpace(ProductDescription.Text))
+            if (OwnerCombo.SelectedItem == null || StatusDescriptionCombo.SelectedItem == null || ProductTypeCombo.SelectedItem == null || ZoneDescriptionCombo.SelectedItem == null || string.IsNullOrWhiteSpace(ProductDescription.Text))
             {
                 MessageBox.Show("Please fill all fields", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
-            _mainWindowViewController.AddNewProduct((ProductTypeDto)ProductTypeCombo.SelectedItem, (OwnerDto) OwnerCombo.SelectedItem, (ProductStatusDto) StatusDescriptionCombo.SelectedItem, (ZoneDto) ZoneDescriptionCombo.SelectedItem, ProductDescription.Text);
+            _mainWindowViewController.AddNewProduct((ProductTypeDto)ProductTypeCombo.SelectedItem, (OwnerDto)OwnerCombo.SelectedItem, (ProductStatusDto)StatusDescriptionCombo.SelectedItem, (ZoneDto)ZoneDescriptionCombo.SelectedItem, ProductDescription.Text);
             ClearProductEditSection();
         }
 
@@ -147,20 +133,6 @@ namespace InventoryManagement
             QRViewWindow window = new QRViewWindow(product);
 
             window.ShowDialog();
-        }
-
-        private void UserDataGrid_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            if(_mainWindowViewController.SelectedUser == null)
-            {
-                return;
-            }
-            UserZoneCombo.SelectedItem = _mainWindowViewController.AvailableZones.First(x => x.Id == _mainWindowViewController.SelectedUser.ZoneId);
-            UserNameTextBox.Text = _mainWindowViewController.SelectedUser.Name;
-            UserLastNameTextBox.Text = _mainWindowViewController.SelectedUser.LastName;
-            UserLoginTextBox.Text = _mainWindowViewController.SelectedUser.Login;
-            IsAdminCheckBox.IsChecked = _mainWindowViewController.SelectedUser.IsAdmin;
-            ActiveCheckBox.IsChecked = _mainWindowViewController.SelectedUser.Active;
         }
 
         private void NewUserButton_Click(object sender, RoutedEventArgs e)
@@ -192,7 +164,7 @@ namespace InventoryManagement
 
         private void SaveUserButton_Click(object sender, RoutedEventArgs e)
         {
-            if(_mainWindowViewController.SelectedUser != null)
+            if (_mainWindowViewController.SelectedUser != null)
             {
                 if (!string.IsNullOrWhiteSpace(UserPassword.Password) && MessageBox.Show("Are you sure that you want to change password ?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
                 {
@@ -201,7 +173,7 @@ namespace InventoryManagement
             }
             else
             {
-                if(UserPassword.Password == null)
+                if (UserPassword.Password == null)
                 {
                     MessageBox.Show("Password need to be set while creating new user", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
@@ -216,6 +188,143 @@ namespace InventoryManagement
                 MessageBox.Show("Unable  to finish operation because of exception. Make sure that you entered correct data", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
+        }
+
+        private void SearchInventoryButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (_mainWindowViewController.SelectedInventorySearchId == 0)
+            {
+                MessageBox.Show("Search must be selected.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            else
+            {
+                _mainWindowViewController.FillInventoryList();
+            }
+        }
+
+        private void NewInventoryButton_Click(object sender, RoutedEventArgs e)
+        {
+            NewInventoryWindow newInventoryWindow = new NewInventoryWindow();
+
+            newInventoryWindow.ShowDialog();
+
+            if (_mainWindowViewController.SelectedInventorySearchId == 0)
+            {
+                return;
+            }
+
+            _mainWindowViewController.FillInventoryList();
+        }
+
+        private void ActivateInvenoryButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(_mainWindowViewController.SelectedInventory == null)
+            {
+                MessageBox.Show("Please select item that you want to change status", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+
+            if (_mainWindowViewController.SelectedInventorySearchId == 0)
+            {
+                return;
+            }
+
+            _mainWindowViewController.ChangeInventoryStatus(2);
+
+            _mainWindowViewController.FillInventoryList();
+        }
+
+        private void FinishInventoryButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (_mainWindowViewController.SelectedInventory == null)
+            {
+                MessageBox.Show("Please select item that you want to change status", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (MessageBox.Show("Are you sure that you want to complete this inventory? \n Unscanned items will be displayed on final report", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
+            {
+                return;
+            }
+
+            if (_mainWindowViewController.SelectedInventorySearchId == 0)
+            {
+                return;
+            }
+
+            _mainWindowViewController.ChangeInventoryStatus(3);
+
+            _mainWindowViewController.FillInventoryList();
+        }
+
+        private void AbandonInventoryButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (_mainWindowViewController.SelectedInventory == null)
+            {
+                MessageBox.Show("Please select item that you want to change status", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (MessageBox.Show("Are you sure that you want to abandon this inventory? \n Final report will not be created for this inventory", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
+            {
+                return;
+            }
+
+            if (_mainWindowViewController.SelectedInventorySearchId == 0)
+            {
+                return;
+            }
+
+            _mainWindowViewController.ChangeInventoryStatus(4);
+
+            _mainWindowViewController.FillInventoryList();
+        }
+
+        private void InventoryDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (_mainWindowViewController.SelectedInventory == null)
+            {
+                return;
+            }
+            _mainWindowViewController.FillInventoryProductList();
+
+            ActivateInvenoryButton.IsEnabled = _mainWindowViewController.ShouldAllowToActivateInventory();
+
+            FinishInventoryButton.IsEnabled = _mainWindowViewController.ShouldAllowToFinishInvenory();
+
+            AbandonInventoryButton.IsEnabled = _mainWindowViewController.ShouldAllowToAbandonInventory();
+
+            GetRaportInventoryButton.IsEnabled = _mainWindowViewController.ShouldAllowToViewRaport();
+        }
+
+        private void UserDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (_mainWindowViewController.SelectedUser == null)
+            {
+                return;
+            }
+            UserZoneCombo.SelectedItem = _mainWindowViewController.AvailableZones.First(x => x.Id == _mainWindowViewController.SelectedUser.ZoneId);
+            UserNameTextBox.Text = _mainWindowViewController.SelectedUser.Name;
+            UserLastNameTextBox.Text = _mainWindowViewController.SelectedUser.LastName;
+            UserLoginTextBox.Text = _mainWindowViewController.SelectedUser.Login;
+            IsAdminCheckBox.IsChecked = _mainWindowViewController.SelectedUser.IsAdmin;
+            ActiveCheckBox.IsChecked = _mainWindowViewController.SelectedUser.Active;
+        }
+
+        private void ProductDataGird_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (_mainWindowViewController.SelectedProduct == null)
+            {
+                return;
+            }
+
+            OwnerCombo.SelectedItem = _mainWindowViewController.AvailableOwners.First(x => x.Name == _mainWindowViewController.SelectedProduct.OwnerDescription);
+            StatusDescriptionCombo.SelectedItem = _mainWindowViewController.AvailableProductStatuses.First(x => x.Description == _mainWindowViewController.SelectedProduct.StatusDescription);
+            ProductTypeCombo.SelectedItem = _mainWindowViewController.AvailableProductTypes.First(x => x.Description == _mainWindowViewController.SelectedProduct.ProductType);
+            ZoneDescriptionCombo.SelectedItem = _mainWindowViewController.AvailableZones.First(x => x.Description == _mainWindowViewController.SelectedProduct.ZoneDescription);
+            ProductDescription.Text = _mainWindowViewController.SelectedProduct.ProductDescription;
         }
     }
 }

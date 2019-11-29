@@ -47,5 +47,25 @@ namespace DataAccess.Implementation
         {
             return QueryForObject<InventoryProductDto>(InventorySql.GetInventoryProductByProductId(productId));
         }
+
+        public InventoryReportDto GetReportForInventory(int inventoryId)
+        {
+            return QueryForObject<InventoryReportDto>(InventorySql.GetReportForInventory(inventoryId));
+        }
+
+        public void InsertInventory(InventoryDto inventoryDto)
+        {
+            NonResultQuerry(InventorySql.InsertInventory(inventoryDto));
+        }
+
+        public void InsertReport(InventoryReportDto raport)
+        {
+            NonResultQuerry(InventorySql.InsertInventoryReport(raport));
+        }
+
+        public void UpdateInventory(InventoryDto inventoryDto)
+        {
+            NonResultQuerry(InventorySql.UpdateInventory(inventoryDto));
+        }
     }
 }

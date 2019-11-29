@@ -1,8 +1,10 @@
 ﻿using Newtonsoft.Json;
 using RestApi.Client.Dto.Owner;
 using RestApi.Client.Dto.Product;
+using RestApi.Client.Dto.Request.Inventory;
 using RestApi.Client.Dto.Request.Product;
 using RestApi.Client.Dto.Request.User;
+using RestApi.Client.Dto.Response.Inventory;
 using RestApi.Client.Dto.Response.Product;
 using RestApi.Client.Dto.Response.User;
 using RestApi.Client.Dto.Response.Zone;
@@ -86,6 +88,43 @@ namespace RestApi.Client
 
         #endregion Zone
 
+        #region Inventory
+
+        public List<InventorySearchTypeDto> GetAllInvenotoyrSearches()
+        {
+            return CallRestApiWithPost<List<InventorySearchTypeDto>>("/Inventory/GetAllActiveInventoryStatuses/");
+        }
+
+        public List<InventoryDto> GetInventorysBySearchId(GetInventoryBySearch getInventoryBySearch)
+        {
+            return CallRestApiWithPost<List<InventoryDto>, GetInventoryBySearch>("/Inventory/GetProductBySearchId/", getInventoryBySearch);
+        }
+
+        public void AddNewInventory(string description, int zoneId)
+        {
+            CallRestApiWithPost("/Inventory/AddNewInventory/", new NewInventoryRequestDto
+            {
+                Description = description,
+                ZoneId = zoneId
+            });
+        }
+
+        public void ChangeInventoryStatus(int statusId, int inventoryId)
+        {
+            CallRestApiWithPost("/Inventory/ChangeInventoryStatus/", new UpdateInventoryDto
+            {
+                InventoryId = inventoryId,
+                NewStatusId = statusId
+            });
+        }
+
+        public InventoryReportDto GetReport(GetReportDto report)
+        {
+            return CallRestApiWithPost<InventoryReportDto, GetReportDto>("/Inventory/GetReport/", report);
+        }
+
+        #endregion Inventory
+
         private T CallRestApiWithPost<T,Tu>(string address, Tu param)
         {
             var client = new RestClient(_baseUrl);
@@ -134,5 +173,7 @@ namespace RestApi.Client
             var request = new RestRequest(address, Method.POST);
             client.Execute(request);
         }
+
+
     }
 }

@@ -19,7 +19,7 @@ namespace RestApi.Controllers
         {
             var user = _userService.Authorize(userRequest.Login, userRequest.Password);
 
-            return Ok(UserModel.FromDomain(user));
+            return Ok(user != null ? UserModel.FromDomain(user) : null);
         }
 
         [HttpPost]

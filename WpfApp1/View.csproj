@@ -88,12 +88,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="NewInventoryWindow.xaml.cs">
+      <DependentUpon>NewInventoryWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="NinjectContainer.cs" />
     <Compile Include="QRViewWindow.xaml.cs">
       <DependentUpon>QRViewWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserContext.cs" />
+    <Compile Include="ViewController\InventoryProductViewModel.cs" />
+    <Compile Include="ViewController\InventoryViewModel.cs" />
     <Compile Include="ViewController\MainWindowViewController.cs" />
+    <Compile Include="ViewController\NewInventoryViewControler.cs" />
     <Compile Include="ViewController\ProductViewModel.cs" />
     <Compile Include="ViewController\QRViewWindowModel.cs" />
     <Page Include="LoginWindow.xaml">
@@ -108,6 +114,10 @@
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="NewInventoryWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

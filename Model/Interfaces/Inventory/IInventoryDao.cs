@@ -20,5 +20,14 @@ namespace DataAccess.Interfaces.Inventory
         void AddInventoryEvent(InventoryEventDto inventoryEvent);
 
         IEnumerable<InventorySearchDto> GetAllActiveInventorySearch();
+
+        void InsertInventory(InventoryDto inventoryDto);
+
+        void UpdateInventory(InventoryDto inventoryDto);
+
+        void InsertReport(InventoryReportDto raport);
+
+        InventoryReportDto GetReportForInventory(int inventoryId);
+
     }
 }

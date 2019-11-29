@@ -1,7 +1,9 @@
 ﻿using RestApi.Client.Dto.Owner;
 using RestApi.Client.Dto.Product;
+using RestApi.Client.Dto.Request.Inventory;
 using RestApi.Client.Dto.Request.Product;
 using RestApi.Client.Dto.Request.User;
+using RestApi.Client.Dto.Response.Inventory;
 using RestApi.Client.Dto.Response.Product;
 using RestApi.Client.Dto.Response.User;
 using RestApi.Client.Dto.Response.Zone;
@@ -47,5 +49,19 @@ namespace RestApi.Client.Interface
         List<ZoneDto> GetAllZones();
 
         #endregion Zone
+
+        #region Inventory
+
+        List<InventorySearchTypeDto> GetAllInvenotoyrSearches();
+
+        List<InventoryDto> GetInventorysBySearchId(GetInventoryBySearch getInventoryBySearch);
+
+        void AddNewInventory(string description, int zoneId);
+
+        void ChangeInventoryStatus(int statusId, int inventoryId);
+
+        InventoryReportDto GetReport(GetReportDto report);
+
+        #endregion Inventory
     }
 }

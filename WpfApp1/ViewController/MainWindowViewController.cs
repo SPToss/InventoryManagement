@@ -1,6 +1,7 @@
 ﻿using RestApi.Client.Dto.Owner;
 using RestApi.Client.Dto.Product;
 using RestApi.Client.Dto.Request.Product;
+using RestApi.Client.Dto.Response.Inventory;
 using RestApi.Client.Dto.Response.Product;
 using RestApi.Client.Dto.Response.User;
 using RestApi.Client.Dto.Response.Zone;
@@ -22,6 +23,8 @@ namespace InventoryManagement.ViewController
             Initialize();
             ProductViewModels.CollectionChanged += ProductsCollectionChanged;
             AllActiveUsers.CollectionChanged += UsersCollectionChanged;
+            InventoryViewModels.CollectionChanged += InventoryCollectionChanged;
+            InventoryProductViewModels.CollectionChanged += InventoryProductCollectionChanged;
         }
 
         #region Event declaration
@@ -36,6 +39,18 @@ namespace InventoryManagement.ViewController
         public ObservableCollection<ProductViewModel> ProductViewModels { get; set; } = new ObservableCollection<ProductViewModel>();
 
         public ObservableCollection<UserResponseDto> AllActiveUsers { get; set; } = new ObservableCollection<UserResponseDto>();
+
+        public ObservableCollection<InventoryViewModel> InventoryViewModels { get; set; } = new ObservableCollection<InventoryViewModel>();
+
+        public ObservableCollection<InventoryProductViewModel> InventoryProductViewModels { get; set; } = new ObservableCollection<InventoryProductViewModel>();
+
+        public List<InventoryProductDto> AllProducts { get; set; } = new List<InventoryProductDto>();
+
+        public List<InventorySearchTypeDto> InventorySearchTypeDtos { get; set; } = new List<InventorySearchTypeDto>(); 
+
+        public int SelectedInventorySearchId { get; set; }
+
+        public InventoryViewModel SelectedInventory { get; set; }
 
         public UserResponseDto SelectedUser { get; set; }
 
@@ -53,6 +68,14 @@ namespace InventoryManagement.ViewController
         public List<ProductTypeDto> AvailableProductTypes { get; set; } = new List<ProductTypeDto>();
 
         public List<ProductStatusDto> AvailableProductStatuses { get; set; } = new List<ProductStatusDto>();
+
+        public bool ShouldAllowToFinishInvenory() => SelectedInventory.InventoryStatus == "ACTIVE";
+
+        public bool ShouldAllowToActivateInventory() => SelectedInventory.InventoryStatus == "NEW";
+
+        public bool ShouldAllowToAbandonInventory() => SelectedInventory.InventoryStatus == "NEW" || SelectedInventory.InventoryStatus == "ACTIVE";
+
+        public bool ShouldAllowToViewRaport() => SelectedInventory.InventoryStatus == "COMPLETE";
 
         #endregion Public fields
 
@@ -91,7 +114,45 @@ namespace InventoryManagement.ViewController
             {
                 ProductViewModels.Add(model);
             }
+        }
 
+        public void FillInventoryList()
+        {
+            InventoryViewModels.Clear();
+            AllProducts = new List<InventoryProductDto>();
+            var inventorys = _restApiClient.GetInventorysBySearchId(new RestApi.Client.Dto.Request.Inventory.GetInventoryBySearch{
+                SearchId = SelectedInventorySearchId
+            });
+
+            foreach(var inventory in inventorys)
+            {
+                InventoryViewModels.Add(new InventoryViewModel
+                {
+                    Description = inventory.Description,
+                    EndDate = inventory.EndDate,
+                    Id = inventory.Id,
+                    InventoryStatus = inventory.InventorySatus.Description,
+                    StartDate = inventory.StartDate,
+                    ZoneName = AvailableZones.First(x => x.Id == inventory.Id).Description
+                });
+            }
+
+            AllProducts = inventorys.SelectMany(x => x.Products).ToList();
+        }
+        
+        public void FillInventoryProductList()
+        {
+            var products = AllProducts.Where(x => x.InventoryId == SelectedInventory.Id);
+            InventoryProductViewModels.Clear();
+            foreach (var product in products)
+            {
+                InventoryProductViewModels.Add(new InventoryProductViewModel
+                {
+                    Id = product.Id,
+                    ScannedDate = product.ScannedDate,
+                    ScannedZone = AvailableZones.First(x => x.Id == product.ZoneId).Description
+                });
+            }
         }
 
         public void RemoveSelectedProduct()
@@ -160,6 +221,10 @@ namespace InventoryManagement.ViewController
             RefreshUsers();
         }
 
+        public void ChangeInventoryStatus(int statusId)
+        {
+            _restApiClient.ChangeInventoryStatus(statusId, SelectedInventory.Id);
+        }
         
         #endregion Public methods
 
@@ -181,6 +246,22 @@ namespace InventoryManagement.ViewController
             }
         }
 
+        private void InventoryCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs("InventoryViewModels"));
+            }
+        }
+
+        private void InventoryProductCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs("InventoryProductViewModels"));
+            }
+        }
+
         private void Initialize()
         {
             ProductSearchTypes = _restApiClient.GetAllProductSearchTypes();
@@ -197,7 +278,7 @@ namespace InventoryManagement.ViewController
                     AllActiveUsers.Add(user);
                 }
             }
-
+            InventorySearchTypeDtos = _restApiClient.GetAllInvenotoyrSearches();
         }
 
         private void SaveOrUpdateProduct(ProductDto product)

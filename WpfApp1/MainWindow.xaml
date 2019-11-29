@@ -101,7 +101,7 @@
                         CanUserDeleteRows="False"
                         IsReadOnly="True"
                         SelectedItem="{Binding SelectedProduct}"
-                        MouseDown="ProductDataGird_MouseDown" Grid.Row="1">
+                        Grid.Row="1" SelectionChanged="ProductDataGird_SelectionChanged">
                     </DataGrid>
 
                     <ComboBox ItemsSource="{Binding Path=ProductSearchTypes}"
@@ -122,19 +122,23 @@
             <TabItem Header="Inventory" Width="50" Height="75" x:Name="InventoryTab">
                 <Grid>
                     <ComboBox 
-                        ItemsSource="{Binding Path=AvailableProductStatuses}" 
-                        DisplayMemberPath="Description"
+                        ItemsSource="{Binding Path=InventorySearchTypeDtos}" 
+                        DisplayMemberPath="SearchTypeDescription"
+                        SelectedValuePath="SearchTypeId"
+                        SelectedValue="{Binding Path=SelectedInventorySearchId}"
                         x:Name="InventorySearchCombo" 
                         Height="30" 
-                        Margin="25,10,140,804"/>
+                        Margin="25,10,140,804"                              
+                        SelectedIndex="0"
+                        IsSynchronizedWithCurrentItem="True" Grid.Row="1"/>
 
                     <Button x:Name="SearchInventoryButton"
                         Height="30" 
                         Margin="1016,10,25,804"
-                        Content="Search" Click="GetQRButton_Click"/>
+                        Content="Search" Click="SearchInventoryButton_Click"/>
 
                     <DataGrid  
-                        ItemsSource="{Binding ProductViewModels, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"          
+                        ItemsSource="{Binding InventoryViewModels, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"          
                         CanUserReorderColumns="True" 
                         CanUserResizeColumns="True" 
                         CanUserResizeRows="False" 
@@ -146,11 +150,11 @@
                         CanUserAddRows="False"
                         CanUserDeleteRows="False"
                         IsReadOnly="True"
-                        SelectedItem="{Binding SelectedProduct}"
-                        MouseDown="ProductDataGird_MouseDown"/>
+                        SelectedItem="{Binding SelectedInventory}"
+                        Grid.Row="1" SelectionChanged="InventoryDataGrid_SelectionChanged"/>
                     
                     <DataGrid  
-                        ItemsSource="{Binding ProductViewModels, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"          
+                        ItemsSource="{Binding InventoryProductViewModels, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"          
                         CanUserReorderColumns="True" 
                         CanUserResizeColumns="True" 
                         CanUserResizeRows="False" 
@@ -161,30 +165,28 @@
                         x:Name="InventoryProductsDataGrid"
                         CanUserAddRows="False"
                         CanUserDeleteRows="False"
-                        IsReadOnly="True"
-                        SelectedItem="{Binding SelectedProduct}"
-                        MouseDown="ProductDataGird_MouseDown"/>
+                        IsReadOnly="True"/>
                     
-                    <Button x:Name="SearchInventoryButton_Copy"
+                    <Button x:Name="NewInventoryButton"
                         Height="30" 
                         Margin="1016,45,25,769"
-                        Content="New" Click="GetQRButton_Click"/>
-                    <Button x:Name="SearchInventoryButton_Copy1"
+                        Content="New" Click="NewInventoryButton_Click"/>
+                    <Button x:Name="ActivateInvenoryButton"
                         Height="30" 
                         Margin="1016,80,25,734"
-                        Content="Activate" Click="GetQRButton_Click"/>
-                    <Button x:Name="SearchInventoryButton_Copy2"
+                        Content="Activate" Click="ActivateInvenoryButton_Click"/>
+                    <Button x:Name="FinishInventoryButton"
                         Height="30" 
                         Margin="1016,115,25,699"
-                        Content="Finish" Click="GetQRButton_Click"/>
-                    <Button x:Name="SearchInventoryButton_Copy3"
+                        Content="Finish" Click="FinishInventoryButton_Click"/>
+                    <Button x:Name="AbandonInventoryButton"
                         Height="30" 
                         Margin="1016,150,25,664"
-                        Content="Abandon" Click="GetQRButton_Click"/>
-                    <Button x:Name="SearchInventoryButton_Copy4"
+                        Content="Abandon" Click="AbandonInventoryButton_Click"/>
+                    <Button x:Name="GetRaportInventoryButton"
                         Height="30" 
                         Margin="1016,185,25,629"
-                        Content="Raprot" Click="GetQRButton_Click"/>
+                        Content="Reprot"/>
                 </Grid>
             </TabItem>
             <TabItem Header="User" Width="50" Height="75" x:Name="UserTab">
@@ -242,8 +244,7 @@
                         CanUserAddRows="False"
                         CanUserDeleteRows="False"
                         IsReadOnly="True"
-                        SelectedItem="{Binding SelectedUser}"
-                        MouseDown="UserDataGrid_MouseDown">
+                        SelectedItem="{Binding SelectedUser}" SelectionChanged="UserDataGrid_SelectionChanged">
                     </DataGrid>
                 </Grid>
             </TabItem>

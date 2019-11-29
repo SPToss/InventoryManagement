@@ -1,0 +1,31 @@
+﻿<Window x:Class="InventoryManagement.NewInventoryWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:InventoryManagement"
+        mc:Ignorable="d"
+        Title="NewInventoryWindow" Height="200" Width="800"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Label Content="Zone" Margin="10,5,684,136" x:Name="ZoneLabel" Width="100" Height="30"/>
+        <ComboBox 
+            ItemsSource="{Binding AvailableZones}" 
+            DisplayMemberPath="Description"
+            SelectedValuePath="Id"
+            SelectedValue="{Binding Path=SelectedZoneId}"
+            x:Name="ZoneCombo" 
+            Height="30" 
+            Margin="87,5,433,136"/>
+
+        <Label Content="Description" Margin="10,43,684,101" x:Name="DescriptionLabel" Width="100"/>
+
+        <TextBox x:Name="InventoryDescription" Margin="10,65,62,27"/>
+
+        <Button x:Name="NewInventoryButton" 
+                        Margin="737,111,10,27"  
+                        Content="Save" Click="NewEditButton_Click" RenderTransformOrigin="0.5,0.5"/>
+
+    </Grid>
+</Window>

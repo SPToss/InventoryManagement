@@ -12,5 +12,11 @@ namespace Service.Interface
         IEnumerable<Inventory> GetInventoryBySearch(GetInventoryBySearch getInventoryBySearch);
 
         IEnumerable<InventorySearchDto> GetAllInventorySerarches();
+
+        void CreateNewInventory(NewInventoryRequestDto newInventoryRequestDto);
+
+        void UpdateInventory(UpdateInventoryDto updateInventoryDto);
+
+        InventoryReportDto GetReport(int inventoryId);
     }
 }
