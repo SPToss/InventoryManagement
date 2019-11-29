@@ -120,7 +120,9 @@ namespace RestApi.Client
 
         public InventoryReportDto GetReport(GetReportDto report)
         {
-            return CallRestApiWithPost<InventoryReportDto, GetReportDto>("/Inventory/GetReport/", report);
+            var result =  CallRestApiWithPost<ParsedInventoryReport, GetReportDto>("/Inventory/GetReport/", report);
+
+            return JsonConvert.DeserializeObject<InventoryReportDto>(result.Raport);
         }
 
         #endregion Inventory

@@ -1,9 +1,11 @@
 ﻿using InventoryManagement.ViewController;
+using Microsoft.Win32;
 using Ninject;
 using RestApi.Client.Dto.Owner;
 using RestApi.Client.Dto.Product;
 using RestApi.Client.Dto.Response.Zone;
 using System;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -325,6 +327,30 @@ namespace InventoryManagement
             ProductTypeCombo.SelectedItem = _mainWindowViewController.AvailableProductTypes.First(x => x.Description == _mainWindowViewController.SelectedProduct.ProductType);
             ZoneDescriptionCombo.SelectedItem = _mainWindowViewController.AvailableZones.First(x => x.Description == _mainWindowViewController.SelectedProduct.ZoneDescription);
             ProductDescription.Text = _mainWindowViewController.SelectedProduct.ProductDescription;
+        }
+
+        private void GetRaportInventoryButton_Click(object sender, RoutedEventArgs e)
+        {
+            var report = _mainWindowViewController.GetReportString();
+            SaveFileDialog save = new SaveFileDialog();
+
+            save.FileName = $"Inventory {_mainWindowViewController.SelectedInventory.Id} reprot.txt";
+
+            save.Filter = "Text File | *.txt";
+
+            if (save.ShowDialog() == true)
+
+            {
+
+                StreamWriter writer = new StreamWriter(save.OpenFile());
+
+                writer.WriteLine(report);
+
+                writer.Dispose();
+
+                writer.Close();
+
+            }
         }
     }
 }

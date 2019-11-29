@@ -19,12 +19,12 @@
             Height="30" 
             Margin="87,5,433,136"/>
 
-        <Label Content="Description" Margin="10,43,684,101" x:Name="DescriptionLabel" Width="100"/>
+        <Label Content="Description" Margin="10,45,684,99" x:Name="DescriptionLabel" Width="100"/>
 
-        <TextBox x:Name="InventoryDescription" Margin="10,65,62,27"/>
+        <TextBox x:Name="InventoryDescription" Margin="10,76,62,16"/>
 
         <Button x:Name="NewInventoryButton" 
-                        Margin="737,111,10,27"  
+                        Margin="742,123,5,15"  
                         Content="Save" Click="NewEditButton_Click" RenderTransformOrigin="0.5,0.5"/>
 
     </Grid>

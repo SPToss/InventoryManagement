@@ -11,6 +11,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
+using System.Text;
 
 namespace InventoryManagement.ViewController
 {
@@ -224,6 +225,52 @@ namespace InventoryManagement.ViewController
         public void ChangeInventoryStatus(int statusId)
         {
             _restApiClient.ChangeInventoryStatus(statusId, SelectedInventory.Id);
+        }
+
+        public string GetReportString()
+        {
+            var report = _restApiClient.GetReport(new GetReportDto
+            {
+                InventoryId = SelectedInventory.Id
+            });
+
+
+            StringBuilder builder = new StringBuilder();
+
+            builder.AppendLine($"Inventory {SelectedInventory.Id} report");
+            builder.AppendLine(report.Info);
+            if (report.ScannedItems.Any())
+            {
+                builder.AppendLine("\n\n\n\n");
+                builder.AppendLine($"Items scanned : {report.ScannedItems.Count}");
+                builder.AppendLine("===============================================================================================================");
+                foreach (var line in report.ScannedItems)
+                {
+                    builder.AppendLine(line);
+                }
+            }
+            if (report.MissingItems.Any())
+            {
+                builder.AppendLine("\n\n\n\n");
+                builder.AppendLine($"Items missing : {report.MissingItems.Count}");
+                builder.AppendLine("===============================================================================================================");
+                foreach (var line in report.MissingItems)
+                {
+                    builder.AppendLine(line);
+                }
+            }
+            if (report.MovedItems.Any())
+            {
+                builder.AppendLine("\n\n\n\n");
+                builder.AppendLine($"Items moved : {report.MovedItems.Count}");
+                builder.AppendLine("===============================================================================================================");
+                foreach (var line in report.MovedItems)
+                {
+                    builder.AppendLine(line);
+                }
+            }
+
+            return builder.ToString();
         }
         
         #endregion Public methods

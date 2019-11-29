@@ -186,7 +186,7 @@
                     <Button x:Name="GetRaportInventoryButton"
                         Height="30" 
                         Margin="1016,185,25,629"
-                        Content="Reprot"/>
+                        Content="Reprot" Click="GetRaportInventoryButton_Click"/>
                 </Grid>
             </TabItem>
             <TabItem Header="User" Width="50" Height="75" x:Name="UserTab">
