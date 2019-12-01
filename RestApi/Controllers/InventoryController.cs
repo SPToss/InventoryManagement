@@ -59,7 +59,7 @@ namespace RestApi.Controllers
         public ActionResult AddUserToInventory([FromBody] AssingUserToInventoryDto request)
         {
             _inventoryService.SaveUserToInventory(request.UserId, request.InventoryId);
-            return Ok();
+            return Ok("ok");
         }
 
         [HttpPost]
