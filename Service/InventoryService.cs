@@ -90,6 +90,21 @@ namespace Service
             }
         }
 
+        public void AddInventoryProduct(AddItemRequestDto request)
+        {
+            Product product = _productService.GetProductById(request.ProductId);
+
+            InventoryProduct inventoryProduct = new InventoryProduct
+            {
+                InventoryId = request.InventoryId,
+                ProductId = product.Id,
+                ZoneId = request.ZoneId,
+                ScannedDate = DateTime.Now
+            };
+
+            AddInventoryProduct(inventoryProduct);
+        }
+
         public void CreateNewInventory(NewInventoryRequestDto newInventoryRequestDto)
         {
             InventoryEventDto eventDto = null;
@@ -130,6 +145,11 @@ namespace Service
         public IEnumerable<InventorySearchDto> GetAllInventorySerarches()
         {
             return _inventoryDao.GetAllActiveInventorySearch();
+        }
+
+        public int GetInventoryAssignedToUser(int userId)
+        {
+            return _inventoryDao.GetInventoryAssignedToUser(userId);
         }
 
         public IEnumerable<Inventory> GetInventoryBySearch(GetInventoryBySearch getInventoryBySearch)
@@ -177,6 +197,11 @@ namespace Service
             return _inventoryDao.GetReportForInventory(inventoryId);
         }
 
+        public void SaveUserToInventory(int userId, int inventoryId)
+        {
+            _inventoryDao.SaveUserToInventory(userId, inventoryId);
+        }
+
         public void UpdateInventory(UpdateInventoryDto updateInventoryDto)
         {
             InventoryEventDto eventDto = null;
@@ -188,7 +213,7 @@ namespace Service
 
                 eventDto = new InventoryEventDto
                 {
-                    Description = "New inventory created",
+                    Description = "Inventory action",
                     EventDate = DateTime.Now,
                     EventType = (int)InventoryEventTypeEnum.InventoryStarted,
                     InventoryId = updateInventoryDto.InventoryId
@@ -205,14 +230,7 @@ namespace Service
                 }
 
                 _inventoryDao.UpdateInventory(inventoryDto);
-
-                eventDto = new InventoryEventDto
-                {
-                    Description = "New inventory created",
-                    EventDate = DateTime.Now,
-                    EventType = (int)InventoryEventTypeEnum.InventoryStarted,
-                    InventoryId = 0
-                };
+                _inventoryDao.RemoveAllUsersFromInventory(inventoryDto.Id);
             }
             catch (Exception e)
             {

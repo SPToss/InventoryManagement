@@ -54,6 +54,44 @@ namespace RestApi.Controllers
             return Ok(results);
         }
 
+        [HttpPost]
+        [ProducesResponseType(200)]
+        public ActionResult AddUserToInventory([FromBody] AssingUserToInventoryDto request)
+        {
+            _inventoryService.SaveUserToInventory(request.UserId, request.InventoryId);
+            return Ok();
+        }
+
+        [HttpPost]
+        [ProducesResponseType(200, Type = typeof(List<InventoryWithUser>))]
+        public ActionResult<InventoryWithUser> GetAllActiveInventorysWithUserTag([FromBody] InventoryAssignedToUser request)
+        {
+            var inventorys = _inventoryService.GetInventoryBySearch(new GetInventoryBySearch
+            {
+                SearchId = 2
+            }).Select(InventoryWithUser.FromDomain);
+
+            var inventoryToUser = _inventoryService.GetInventoryAssignedToUser(request.UserId);
+
+            foreach(var inventory in inventorys)
+            {
+                if(inventory.Id == inventoryToUser)
+                {
+                    inventory.IsAssigned = true;
+                }
+            }
+            return Ok(inventorys);
+        }
+
+        [HttpPost]
+        [ProducesResponseType(200)]
+        public ActionResult AddInventoryProduct([FromBody] AddItemRequestDto request)
+        {
+            _inventoryService.AddInventoryProduct(request);
+            return Ok();
+        }
+
+
         protected override void InitializeController()
         {
             _inventoryService = NinjectContainer.Container.Get<IInventoryService>();

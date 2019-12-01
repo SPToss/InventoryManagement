@@ -18,5 +18,11 @@ namespace Service.Interface
         void UpdateInventory(UpdateInventoryDto updateInventoryDto);
 
         InventoryReportDto GetReport(int inventoryId);
+
+        int GetInventoryAssignedToUser(int userId);
+
+        void SaveUserToInventory(int userId, int inventoryId);
+
+        void AddInventoryProduct(AddItemRequestDto request);
     }
 }

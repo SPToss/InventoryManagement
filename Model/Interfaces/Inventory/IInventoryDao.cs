@@ -29,5 +29,11 @@ namespace DataAccess.Interfaces.Inventory
 
         InventoryReportDto GetReportForInventory(int inventoryId);
 
+        int GetInventoryAssignedToUser(int userId);
+
+        void SaveUserToInventory(int userId, int inventoryId);
+
+        void RemoveAllUsersFromInventory(int inventoryId);
+
     }
 }

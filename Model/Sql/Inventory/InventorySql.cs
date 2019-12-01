@@ -58,7 +58,7 @@ namespace DataAccess.Sql.Inventory
                 $"NULL," +
                 $"{inventoryProduct.InventoryId}," +
                 $"{inventoryProduct.ZoneId}," +
-                $"{inventoryProduct.ScannedDate.ToString("yyyy-MM-dd hh:mm:ss")}," +
+                $"'{inventoryProduct.ScannedDate.ToString("yyyy-MM-dd hh:mm:ss")}'," +
                 $"{inventoryProduct.ProductId})";
         }
 
@@ -114,6 +114,21 @@ namespace DataAccess.Sql.Inventory
         public static string GetReportForInventory(int inventoryId)
         {
             return $@"SELECT INVENTORY_ID AS InventoryId, RAPORT AS Raport FROM INVENTORY_RAPORT WHERE INVENTORY_ID = {inventoryId}";
+        }
+
+        public static string GetInventoryAssignedToUser(int userId)
+        {
+            return $@"SELECT INVENTORY_ID FROM INVENTORY_USER_X_REF WHERE USER_ID = {userId} AND ACTIVE = 1";
+        }
+
+        public static string SaveUserToInventory(int userId, int inventoryId)
+        {
+            return $@"INSERT INTO INVENTORY_USER_X_REF (ID, INVENTORY_ID, USER_ID, ACTIVE) VALUES (NULL, {inventoryId}, {userId}, 1)";
+        }
+
+        public static string RemoveAllUsersFormInventory(int inventoryId)
+        {
+            return $@"UPDATE  INVENTORY_USER_X_REF SET ACTIVE = 0 WHERE INVENTORY_ID = {inventoryId}";
         }
 
         private static string GetInventoryProductSql()

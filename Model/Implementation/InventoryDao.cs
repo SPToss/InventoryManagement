@@ -33,6 +33,11 @@ namespace DataAccess.Implementation
             return QuerryForList<InventoryProductDto>(InventorySql.GetInventoryProductsByInventoryId(inventoryId));
         }
 
+        public int GetInventoryAssignedToUser(int userId)
+        {
+            return QueryForObject<int>(InventorySql.GetInventoryAssignedToUser(userId));
+        }
+
         public InventoryDto GetInventoryById(int inventoryId)
         {
             return QueryForObject<InventoryDto>(InventorySql.GetInventoryById(inventoryId));
@@ -61,6 +66,16 @@ namespace DataAccess.Implementation
         public void InsertReport(InventoryReportDto raport)
         {
             NonResultQuerry(InventorySql.InsertInventoryReport(raport));
+        }
+
+        public void RemoveAllUsersFromInventory(int inventoryId)
+        {
+            NonResultQuerry(InventorySql.RemoveAllUsersFormInventory(inventoryId));
+        }
+
+        public void SaveUserToInventory(int userId, int inventoryId)
+        {
+            NonResultQuerry(InventorySql.SaveUserToInventory(userId, inventoryId));
         }
 
         public void UpdateInventory(InventoryDto inventoryDto)
