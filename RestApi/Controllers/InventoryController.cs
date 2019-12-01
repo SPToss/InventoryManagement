@@ -55,11 +55,11 @@ namespace RestApi.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(200)]
+        [ProducesResponseType(200, Type = typeof(AssingUserToInventoryDto))]
         public ActionResult AddUserToInventory([FromBody] AssingUserToInventoryDto request)
         {
             _inventoryService.SaveUserToInventory(request.UserId, request.InventoryId);
-            return Ok("ok");
+            return Ok(new AssingUserToInventoryDto { InventoryId = request.InventoryId, UserId = request.UserId });
         }
 
         [HttpPost]
@@ -73,9 +73,9 @@ namespace RestApi.Controllers
 
             var inventoryToUser = _inventoryService.GetInventoryAssignedToUser(request.UserId);
 
-            foreach(var inventory in inventorys)
+            foreach (var inventory in inventorys)
             {
-                if(inventory.Id == inventoryToUser)
+                if (inventory.Id == inventoryToUser)
                 {
                     inventory.IsAssigned = true;
                 }
@@ -84,11 +84,11 @@ namespace RestApi.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(200)]
+        [ProducesResponseType(200, Type = typeof(AddItemRequestDto))]
         public ActionResult AddInventoryProduct([FromBody] AddItemRequestDto request)
         {
             _inventoryService.AddInventoryProduct(request);
-            return Ok();
+            return Ok(request);
         }
 
 
