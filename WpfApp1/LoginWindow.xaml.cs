@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Input;
 using RestApi.Client.Dto.Response.User;
 using RestApi.Client.Dto.Request.User;
+using System.Configuration;
 
 namespace InventoryManagement
 {
@@ -19,7 +20,7 @@ namespace InventoryManagement
         {
             InitializeComponent();
             _restApiClient = NinjectContainer.Container.Get<IRestApiClient>();
-
+            _restApiClient.SetDefaultUrl(Properties.Settings.Default.DefaultRestApiAddress);
             #region events
             KeyDown += new KeyEventHandler(KeyDownEventHandler);
             #endregion events

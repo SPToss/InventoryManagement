@@ -63,5 +63,7 @@ namespace RestApi.Client.Interface
         InventoryReportDto GetReport(GetReportDto report);
 
         #endregion Inventory
+
+        void SetDefaultUrl(string url);
     }
 }

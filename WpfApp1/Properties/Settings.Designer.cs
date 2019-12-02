@@ -22,5 +22,14 @@ namespace InventoryManagement.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:61599/api")]
+        public string DefaultRestApiAddress {
+            get {
+                return ((string)(this["DefaultRestApiAddress"]));
+            }
+        }
     }
 }

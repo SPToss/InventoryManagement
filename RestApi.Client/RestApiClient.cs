@@ -16,7 +16,7 @@ namespace RestApi.Client
 {
     public class RestApiClient : IRestApiClient
     {
-        private readonly string _baseUrl = RestApi.Client.Properties.Resources.RestApiAddress;
+        private string _baseUrl = RestApi.Client.Properties.Resources.RestApiAddress;
 
         #region User
 
@@ -126,6 +126,12 @@ namespace RestApi.Client
         }
 
         #endregion Inventory
+
+
+        public void SetDefaultUrl(string url)
+        {
+            _baseUrl = url;
+        }
 
         private T CallRestApiWithPost<T,Tu>(string address, Tu param)
         {

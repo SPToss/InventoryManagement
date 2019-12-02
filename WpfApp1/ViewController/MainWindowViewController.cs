@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 
@@ -21,6 +22,7 @@ namespace InventoryManagement.ViewController
         public MainWindowViewController(IRestApiClient restApiClient)
         {
             _restApiClient = restApiClient;
+            _restApiClient.SetDefaultUrl(ConfigurationManager.AppSettings["DefaultRestApiAddress"]);
             Initialize();
             ProductViewModels.CollectionChanged += ProductsCollectionChanged;
             AllActiveUsers.CollectionChanged += UsersCollectionChanged;

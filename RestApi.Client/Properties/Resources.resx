@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="RestApiAddress" xml:space="preserve">
-    <value>https//localhost:61599/api</value>
+    <value>http://localhost:61599/api</value>
     <comment>Default address to rest API </comment>
   </data>
 </root>
