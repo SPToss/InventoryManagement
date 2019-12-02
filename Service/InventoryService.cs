@@ -62,16 +62,19 @@ namespace Service
                         EventType = (int)InventoryEventTypeEnum.DuplicateScanned
                     };
                 }
-
-                _inventoryDao.AddInventoryProduct(inventoryProduct.ToDto());
-
-                eventDto = new InventoryEventDto
+                else
                 {
-                    Description = $"Product {inventoryProduct.ProductId} was added into inventory {inventoryProduct.InventoryId}",
-                    EventDate = DateTime.Now,
-                    InventoryId = inventoryProduct.InventoryId,
-                    EventType = (int)InventoryEventTypeEnum.ProductAdded
-                };
+
+                    _inventoryDao.AddInventoryProduct(inventoryProduct.ToDto());
+
+                    eventDto = new InventoryEventDto
+                    {
+                        Description = $"Product {inventoryProduct.ProductId} was added into inventory {inventoryProduct.InventoryId}",
+                        EventDate = DateTime.Now,
+                        InventoryId = inventoryProduct.InventoryId,
+                        EventType = (int)InventoryEventTypeEnum.ProductAdded
+                    };
+                }
 
             }
             catch(Exception e)

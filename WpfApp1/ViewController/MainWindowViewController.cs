@@ -243,7 +243,7 @@ namespace InventoryManagement.ViewController
             {
                 builder.AppendLine("\n\n\n\n");
                 builder.AppendLine($"Items scanned : {report.ScannedItems.Count}");
-                builder.AppendLine("===============================================================================================================");
+                builder.AppendLine("===============================================================================+");
                 foreach (var line in report.ScannedItems)
                 {
                     builder.AppendLine(line);
