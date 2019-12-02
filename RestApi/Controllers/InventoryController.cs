@@ -69,7 +69,7 @@ namespace RestApi.Controllers
             var inventorys = _inventoryService.GetInventoryBySearch(new GetInventoryBySearch
             {
                 SearchId = 2
-            }).Select(InventoryWithUser.FromDomain);
+            }).Select(InventoryWithUser.FromDomain).ToList();
 
             var inventoryToUser = _inventoryService.GetInventoryAssignedToUser(request.UserId);
 
