@@ -22,7 +22,7 @@ namespace InventoryManagement.ViewController
         public MainWindowViewController(IRestApiClient restApiClient)
         {
             _restApiClient = restApiClient;
-            _restApiClient.SetDefaultUrl(ConfigurationManager.AppSettings["DefaultRestApiAddress"]);
+            _restApiClient.SetDefaultUrl(Properties.Settings.Default.DefaultRestApiAddress);
             Initialize();
             ProductViewModels.CollectionChanged += ProductsCollectionChanged;
             AllActiveUsers.CollectionChanged += UsersCollectionChanged;
@@ -245,7 +245,7 @@ namespace InventoryManagement.ViewController
             {
                 builder.AppendLine("\n\n\n\n");
                 builder.AppendLine($"Items scanned : {report.ScannedItems.Count}");
-                builder.AppendLine("===============================================================================+");
+                builder.AppendLine("===============================================================================");
                 foreach (var line in report.ScannedItems)
                 {
                     builder.AppendLine(line);
@@ -255,7 +255,7 @@ namespace InventoryManagement.ViewController
             {
                 builder.AppendLine("\n\n\n\n");
                 builder.AppendLine($"Items missing : {report.MissingItems.Count}");
-                builder.AppendLine("===============================================================================================================");
+                builder.AppendLine("===============================================================================");
                 foreach (var line in report.MissingItems)
                 {
                     builder.AppendLine(line);
@@ -265,7 +265,7 @@ namespace InventoryManagement.ViewController
             {
                 builder.AppendLine("\n\n\n\n");
                 builder.AppendLine($"Items moved : {report.MovedItems.Count}");
-                builder.AppendLine("===============================================================================================================");
+                builder.AppendLine("===============================================================================");
                 foreach (var line in report.MovedItems)
                 {
                     builder.AppendLine(line);
